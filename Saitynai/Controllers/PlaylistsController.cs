@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 using Saitynai.Helpers;
 using Saitynai.Models;
 
@@ -25,10 +27,11 @@ namespace Saitynai.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Playlist>>> GetPlaylists()
         {
-          if (_context.Playlists == null)
-          {
-              return NotFound();
-          }
+            if (_context.Playlists == null)
+            {
+                return NotFound();
+            }
+
             return await _context.Playlists.ToListAsync();
         }
 
@@ -36,11 +39,12 @@ namespace Saitynai.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Playlist>> GetPlaylist(string id)
         {
-          if (_context.Playlists == null)
-          {
-              return NotFound();
-          }
-            var playlist = await _context.Playlists.FindAsync(id);
+            if (_context.Playlists == null)
+            {
+                return NotFound();
+            }
+
+            var playlist = await _context.Playlists.FindAsync(id); // TODO DOES NOT FIND BY ID
 
             if (playlist == null)
             {
@@ -86,10 +90,11 @@ namespace Saitynai.Controllers
         [HttpPost]
         public async Task<ActionResult<Playlist>> PostPlaylist(Playlist playlist)
         {
-          if (_context.Playlists == null)
-          {
-              return Problem("Entity set 'DataContext.Playlists'  is null.");
-          }
+            if (_context.Playlists == null)
+            {
+                return Problem("Entity set 'DataContext.Playlists'  is null.");
+            }
+
             _context.Playlists.Add(playlist);
             try
             {
@@ -118,6 +123,7 @@ namespace Saitynai.Controllers
             {
                 return NotFound();
             }
+
             var playlist = await _context.Playlists.FindAsync(id);
             if (playlist == null)
             {

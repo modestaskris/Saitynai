@@ -1,6 +1,8 @@
 ﻿namespace Saitynai.Classes;
 
-public class Role
+public enum Role
 {
-    // TODO maybe use enum??
+    Admin, 
+    User,
+    Guest
 }
