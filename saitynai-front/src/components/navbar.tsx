@@ -8,12 +8,12 @@ export default function NavBar() {
             <div className="flex justify-start float-left space-x-4">
                 {/* Left  */}
                 {/* <Link to={ROUTES.SCRAPER}>Scraper</Link> */}
-                <Link to={ROUTES.PLAYLISTS}>Youtube Playlists</Link>
+                <Link to={ROUTES.PLAYLISTS}>Playlists</Link>
             </div>
             <div>
                 {/* Between */}
                 <div className="font-medium text-4xl">
-                    <Link to={ROUTES.LANDING}>Web Scraper</Link>
+                    <Link to={ROUTES.LANDING}>Youtube Playlists</Link>
                 </div>
             </div>
             <div className="flex justify-end float-right space-x-4">
