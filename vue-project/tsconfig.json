@@ -1,0 +1,37 @@
+{
+  // "compilerOptions": {
+  //   "target": "ESNEXT",
+  //   "module": "ESNext",
+  //   "moduleResolution": "Node",
+  //   "importHelpers": true,
+  //   "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+  //   "esModuleInterop": true,
+  //   "allowJs": true,
+  //   "sourceMap": true,
+  //   "strict": true,
+  //   "noEmit": true,
+  //   "experimentalDecorators": true,
+  //   "allowSyntheticDefaultImports": true,
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "~/*": ["./*"],
+  //     "@/*": ["./*"]
+  //   },
+  //   "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node","@nuxtjs/vuetify","@nuxt/vue-app",]
+  // },
+  // "include": ["*.vue", "*.ts"],
+  // "exclude": ["node_modules", ".nuxt", "dist"]
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue, *.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
+}
