@@ -12,8 +12,8 @@ using Saitynai.Helpers;
 namespace Saitynai.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220915104413_usingByteArrToHoldUserPassword")]
-    partial class usingByteArrToHoldUserPassword
+    [Migration("20220923162854_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,10 +24,30 @@ namespace Saitynai.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Saitynai.Models.Categorie", b =>
+                {
+                    b.Property<int>("CategorieId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategorieId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategorieId");
+
+                    b.ToTable("Categorie");
+                });
+
             modelBuilder.Entity("Saitynai.Models.Playlist", b =>
                 {
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("CategorieId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -39,12 +59,14 @@ namespace Saitynai.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Url");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CategorieId");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Playlists");
                 });
@@ -72,11 +94,11 @@ namespace Saitynai.Migrations
 
             modelBuilder.Entity("Saitynai.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -89,20 +111,30 @@ namespace Saitynai.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasKey("Username");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Username = "admin",
+                            Id = -1,
+                            PasswordHash = new byte[] { 202, 102, 21, 44, 163, 29, 251, 47, 83, 150, 123, 193, 137, 206, 75, 164, 174, 143, 233, 86, 222, 33, 208, 204, 178, 214, 160, 158, 116, 14, 100, 152, 137, 28, 184, 99, 198, 121, 115, 66, 255, 120, 217, 201, 168, 109, 136, 180, 126, 238, 59, 105, 26, 7, 147, 3, 162, 104, 100, 135, 89, 229, 70, 75 },
+                            PasswordSalt = new byte[] { 209, 125, 171, 227, 187, 184, 233, 148, 175, 100, 63, 17, 189, 153, 192, 72, 1, 248, 63, 35, 85, 23, 76, 69, 254, 95, 193, 239, 172, 216, 39, 96, 3, 3, 143, 179, 125, 192, 138, 102, 16, 55, 64, 132, 241, 96, 10, 119, 101, 190, 205, 184, 29, 35, 114, 223, 255, 101, 205, 65, 229, 78, 174, 201, 58, 224, 45, 218, 67, 49, 213, 0, 201, 171, 203, 191, 15, 32, 147, 107, 167, 33, 140, 51, 18, 38, 37, 170, 11, 223, 150, 168, 219, 238, 247, 58, 144, 72, 82, 108, 19, 123, 192, 198, 49, 207, 126, 93, 78, 6, 251, 108, 181, 211, 243, 28, 228, 161, 16, 228, 158, 186, 164, 95, 24, 1, 242, 111 },
+                            Role = 0
+                        });
                 });
 
             modelBuilder.Entity("Saitynai.Models.Playlist", b =>
                 {
+                    b.HasOne("Saitynai.Models.Categorie", null)
+                        .WithMany("Playlists")
+                        .HasForeignKey("CategorieId");
+
                     b.HasOne("Saitynai.Models.User", null)
                         .WithMany("Playlists")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("Username");
                 });
 
             modelBuilder.Entity("Saitynai.Models.Song", b =>
@@ -110,6 +142,11 @@ namespace Saitynai.Migrations
                     b.HasOne("Saitynai.Models.Playlist", null)
                         .WithMany("Songs")
                         .HasForeignKey("PlaylistUrl");
+                });
+
+            modelBuilder.Entity("Saitynai.Models.Categorie", b =>
+                {
+                    b.Navigation("Playlists");
                 });
 
             modelBuilder.Entity("Saitynai.Models.Playlist", b =>
