@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +15,11 @@ namespace Saitynai.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthController> _logger;
         private DataContext _dataContext;
-
-        public static User user = new User();
 
         public AuthController(IConfiguration configuration, DataContext context)
         {
@@ -29,36 +28,55 @@ namespace Saitynai.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        public async Task<ObjectResult> Register(UserDto request)
         {
+            var user1 = _dataContext.Users.Find(request.Username);
+            if (user1 != null)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden, "Username already exists");
+            }
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             
-            // TODO check if user does not exists
-            // allow to create new account if true
+            
+            User user = new User()
+            {
+                Username = request.Username,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt, 
+                Categories = new List<Category>(),
+                Role = Role.User
+            };
 
-            user.Username = request.Username;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.Role = Role.User;
+            _dataContext.Users.Add(user);
+            await _dataContext.SaveChangesAsync();
 
-            return Ok(user);
+            return StatusCode((int)HttpStatusCode.Created, "");
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
+        public async Task<ObjectResult> Login(UserDto request)
         {
+            var user = _dataContext.Users.Find(request.Username);
+
+            if (user == null)
+            {
+                return BadRequest("User does not exists");
+            }
+
             if (user.Username != request.Username)
             {
-                return BadRequest("User not found.");
+                // TODO test 
+                return StatusCode((int)HttpStatusCode.Forbidden, "User not found.");
             }
-
+            
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Wrong password");
+                // TODO test 
+                return StatusCode((int)HttpStatusCode.Forbidden, "Wrong password");
             }
-
+            
             string token = CreateToken(user);
-
+            
             return Ok(token);
         }
 
@@ -85,7 +103,8 @@ namespace Saitynai.Controllers
             // Or here payload
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim("username", user.Username),
+                new Claim("role", user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(
