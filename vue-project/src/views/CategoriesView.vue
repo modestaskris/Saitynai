@@ -1,16 +1,22 @@
+<script setup lang="ts">
+import route from '../router/route';
+
+</script>
+
 <template>
   <div>
-    <AddModel @createButtonPressed="addNewCategory" modelName="Category" />
+    <AddModel @createButtonPressed="addNewCategory" modelType="category" />
     <hr />
-    <!-- TODO add button to create category  -->
-    <!-- TODO add button to delete and select categories  -->
     <div>
       <ModelRow
         v-for="playlist in categories"
         v-bind:key="playlist.categoryId"
         @deleteModel="deleteCategoryFromCategories"
+        @editModel="updateCategory"
         :modelId="playlist.categoryId"
         :name="playlist.name"
+        :routeRoot="route.CATEGORIES"
+        modelType="category"
       />
     </div>
   </div>
@@ -77,9 +83,30 @@ export default defineComponent({
       if (resp.status === 204) {
         this.categories = this.categories.filter((x) => x.categoryId !== id);
       } else {
+        // TODO: implement error handling...
         console.error("Delete didnt work");
       }
     },
+    async updateCategory(categId: Number, newName: string){
+      console.log(categId);
+      const obj = this.categories.find(x => x.categoryId === categId);
+      const resp = await CategoryService.update(categId, {
+        name: newName
+      });
+      console.log(resp);
+      if(resp.status === 204){
+        // success... replace old data with new...
+        // TODO: 
+        this.categories = this.categories.map(x => {
+          if(x.categoryId == categId){
+            x.name = newName
+          }
+          return x;
+        })
+      } else {
+        // TODO: throw error
+      }
+    }
   },
   components: { Category, AddModel, ModelRow },
 });

@@ -5,21 +5,19 @@
     class="
       block
       text-white
-      bg-blue-700
-      hover:bg-blue-800
-      focus:ring-4 focus:outline-none focus:ring-blue-300
+      bg-green-500
+      hover:bg-green-600
+      focus:ring-4 focus:outline-none focus:ring-green-300
       font-medium
       rounded-lg
       text-sm
-      px-5
-      py-2.5
+      p-1
       text-center
-      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
     "
     type="button"
     data-modal-toggle="authentication-modal"
   >
-    Add {{ modelType }}
+    Edit
   </button>
 
   <!-- Main modal -->
@@ -83,9 +81,10 @@
         </button>
         <div class="py-6 px-6 lg:px-8">
           <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-            Add new {{ modelType }}
+            Edit {{ modelName }}
           </h3>
           <div class="space-y-6" action="#">
+            <!-- Renders only for category type -->
             <div v-if="isCategory">
               <label
                 for="categ"
@@ -97,7 +96,7 @@
                   text-gray-900
                   dark:text-gray-300
                 "
-                >{{ modelType }} name</label
+                >Type {{ modelName }} new name:</label
               >
               <input
                 v-model="newModelName"
@@ -132,7 +131,7 @@
                   text-gray-900
                   dark:text-gray-300
                 "
-                >Type {{ modelType }} Title:</label
+                >Type {{ modelName }} new name:</label
               >
               <input
                 v-model="newModelName"
@@ -166,7 +165,7 @@
                   text-gray-900
                   dark:text-gray-300
                 "
-                >Type {{ modelType }} Url:</label
+                >Type {{ modelName }} new Url:</label
               >
               <input
                 v-model="newUrl"
@@ -229,7 +228,7 @@
             <div v-else>{{ modelType }} - is not implemented....</div>
             <!-- type="submit" -->
             <button
-              @click="onAddCategory"
+              @click="onUpdateModel"
               class="
                 w-full
                 text-white
@@ -245,7 +244,7 @@
                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
               "
             >
-              Create
+              Update
             </button>
           </div>
         </div>
@@ -253,7 +252,7 @@
     </div>
   </div>
 </template>
-  
+    
 <script lang="ts">
 import type { ICategory } from "@/models/category/category";
 import { CategoryService } from "@/services/categoryService";
@@ -261,9 +260,10 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   props: {
+    modelName: String,
     modelType: String,
   },
-  emits: ["createButtonPressed"],
+  emits: ["editModelPressed"],
   data() {
     return {
       displayModal: true as boolean,
@@ -281,44 +281,43 @@ export default defineComponent({
     isSong(): boolean {
       return this.modelType === "song";
     },
-    isCategoryEmpty(): boolean {
-      return this.newModelName == "";
-    },
-    isPlaylistEmpty(): boolean {
-      return this.newModelName == "" || this.newUrl == "";
-    },
-    isSongEmpty(): boolean {
-      return this.newUrl === "";
-    },
   },
   methods: {
     onModalClick() {
       this.displayModal = !this.displayModal;
     },
-    async onAddCategory() {
+    async onUpdateModel() {
       if (this.isCategory) {
-        if (this.isCategoryEmpty) {
-          throw Error("Input fields is empty");
+        if (this.newModelName == "") {
+          this.showError();
+          return;
         }
-        this.$emit("createButtonPressed", this.newModelName);
+        this.$emit("editModelPressed", this.newModelName);
       } else if (this.isPlaylist) {
-        if (this.isPlaylistEmpty) {
-          throw Error("Input fields is empty");
+        if (this.newModelName == "" || this.newUrl == "") {
+          this.showError();
+          return;
         }
-        this.$emit("createButtonPressed", this.newModelName, this.newUrl);
+        this.$emit("editModelPressed", this.newModelName, this.newUrl);
       } else if (this.isSong) {
-        if (this.isSongEmpty) {
-          throw Error("Input fields is empty");
+        if (this.newUrl == "") {
+          this.showError();
+          return;
         }
-        // NewModelName is 
-        this.$emit("createButtonPressed", 'unusedField', this.newUrl);
+        this.$emit("editModelPressed", "empty first param", this.newUrl);
+      } else {
+        throw Error("type not found: " + this.modelType);
+        // TODO emit not implemented.. or throw error
       }
-      this.clearInput();
+      this.clearData();
       this.onModalClick();
     },
-    clearInput() {
-      this.newModelName = ""; // clears old category name
+    clearData() {
+      this.newModelName = ""; // clears old data
       this.newUrl = "";
+    },
+    showError() {
+      throw Error("Input data is empty...");
     },
   },
 });

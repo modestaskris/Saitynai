@@ -2,20 +2,23 @@
 import Playlist from "../components/playlists/Playlist.vue";
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
+import route from "@/router/route";
 </script>
 
 <template>
   <div>
-    <AddModelVue modelName="Playlist" @create-button-pressed="createPlaylist" />
-
+    <AddModelVue modelType="playlist" @create-button-pressed="createPlaylist" />
     <!-- TODO: endpoint returns all playlists... -->
     <ModelRow
       v-for="playlist in playlists"
       v-bind:key="playlist.playlistId"
       @deleteModel="deletePlaylist"
+      @editModel="editPlaylist"
       :modelId="playlist.playlistId"
       :name="playlist.title"
       :url="playlist.url"
+      :route-root="route.PLAYLISTS"
+      model-type="playlist"
     />
   </div>
 </template>
@@ -23,6 +26,7 @@ import ModelRow from "@/components/ModelRow.vue";
 <script lang="ts">
 import { defineComponent } from "vue";
 import { CategoryService } from "@/services/categoryService";
+import { PlaylistService } from "@/services/playlistService";
 
 interface IPlaylist {
   playlistId: number;
@@ -47,18 +51,54 @@ export default defineComponent({
         console.error("Error while fetching category playlists...");
       }
     },
-    createPlaylist(playlistName: string) {
-      // TODO: implement
-      console.log(playlistName);
-      throw Error("Not implemented");
+    async createPlaylist(title: string, url: string) {
+      const obj = {
+        categoryId: this.categoryId,
+        title: title,
+        url: url,
+      };
+      const resp = await PlaylistService.create(obj);
+      console.log(resp);
+      if (resp.status === 201) {
+        this.playlists.push(resp.data);
+      } else {
+        throw Error("Error while creating playlist, code" + resp.status);
+      }
     },
-    deletePlaylist(playlistId: Number){
-      // TODO: implement
-      throw Error("Not implemented");
+    async deletePlaylist(playlistId: Number) {
+      const resp = await PlaylistService.delete(playlistId);
+      console.log(resp);
+      // TODO: test
+      if (resp.status == 204) {
+        this.playlists = this.playlists.filter(
+          (x) => x.playlistId !== playlistId
+        );
+      } else {
+        throw Error("Error while delete playlist... errorcode:" + resp.status);
+      }
+    },
+    async editPlaylist(playlistId: Number, newName: string, newUrl: string) {
+      const obj = {
+        categoryId: this.categoryId,
+        title: newName,
+        url: newUrl,
+      };
+      const resp = await PlaylistService.update(playlistId, obj);
+      if (resp.status === 200) {
+        this.playlists = this.playlists.map((x) => {
+          if (x.playlistId === playlistId) {
+            x = resp.data;
+          }
+          return x;
+        });
+      } else {
+        throw Error(
+          "Unhandled error code while updating playlist.." + resp.status
+        );
+      }
     },
   },
   mounted() {
-    // TODO fetch information about category playlists...
     this.getPlaylists();
   },
 });

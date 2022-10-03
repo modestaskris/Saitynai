@@ -31,7 +31,7 @@ export const CategoryService ={
     async get(id:number){
         return await AxiosAuthInstance.get(ENDPOINT.Categories+ `/${id}`);
     },
-    async update(id:number, obj: ICategoryDTO){
+    async update(id:Number, obj: ICategoryDTO){
         return await AxiosAuthInstance.put(ENDPOINT.Categories+ `/${id}`, obj);
     },
     async delete(id:Number){

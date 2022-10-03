@@ -8,9 +8,9 @@ interface ICategory  {
     url: string
 }
 
- interface IPlaylistDTO  {
-    categorieName: string, // TODO should use category id...
-    playlistName: string,
+ export interface IPlaylistDTO  {
+    categoryId: number, // TODO should use category id...
+    title: string,
     url: string
 }
 
@@ -30,7 +30,7 @@ export const PlaylistService = {
     async get(id:number){
         return await AxiosAuthInstance.get(ENDPOINT.Playlists+ `/${id}`);
     },
-    async update(id:number, obj: IPlaylistDTO){
+    async update(id:Number, obj: IPlaylistDTO){
         return await AxiosAuthInstance.put(ENDPOINT.Playlists+ `/${id}`, obj);
     },
     async delete(id:Number){

@@ -2,6 +2,7 @@ import CategoriesViewVue from "@/views/CategoriesView.vue";
 import LoginViewVue from "@/views/LoginView.vue";
 import PlaylistsViewVue from "@/views/PlaylistsView.vue";
 import RegisterViewVue from "@/views/RegisterView.vue";
+import SongViewVue from "@/views/SongView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import auth from "./authMiddleware";
 import ROUTE from './route';
@@ -30,6 +31,13 @@ const router = createRouter({
     {
       path: ROUTE.CATEGORIES + '/:categoryId',
       component: PlaylistsViewVue,
+      meta:{
+        middleware: auth
+      }
+    },
+    {
+      path: ROUTE.PLAYLISTS + '/:playlistId',
+      component: SongViewVue,
       meta:{
         middleware: auth
       }
