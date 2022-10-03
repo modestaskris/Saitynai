@@ -26,3 +26,13 @@ import { RouterLink, RouterView } from "vue-router";
 
   <RouterView />
 </template>
+
+<script lang="ts">
+export default {
+  data(){
+    return{
+
+    }
+  }
+}
+</script>
