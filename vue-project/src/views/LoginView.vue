@@ -47,9 +47,11 @@
 
 <script lang="ts">
 import { AuthService } from '@/services/authService';
-import type { IUser } from '@/models/user/interface';
-import { ENDPOINT } from '@/api/endpoints';
-export default {
+import type { IUser } from '@/models/user/user';
+import ROUTE from '../router/route';
+
+import { defineComponent } from 'vue';
+export default defineComponent({
     data(){
         return{
             Username: "",
@@ -75,7 +77,7 @@ export default {
             if(resp.status == 200){
                 // TODO save token...
                 AuthService.saveToken(resp.data);
-                this.$router.push({path: ENDPOINT.Categories});
+                this.$router.push({path: ROUTE.CATEGORIES});
             } else {
                 // todo show errors...
             }
@@ -87,5 +89,5 @@ export default {
             return false;
         }
     },
-}
+})
 </script>

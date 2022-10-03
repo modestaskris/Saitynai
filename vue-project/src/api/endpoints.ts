@@ -10,4 +10,7 @@ export const ENDPOINT  = {
     Login: endpointVersion + auth +'/login',
     // Other
     Categories: endpointVersion+'/category',
+    Playlists: endpointVersion+'/playlists',
+    Songs: endpointVersion+'/songs',
+    Users: endpointVersion+'/users',
 }
