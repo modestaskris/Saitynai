@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Playlist from "../components/playlists/Playlist.vue";
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
 import route from "@/router/route";

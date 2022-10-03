@@ -23,7 +23,6 @@ import route from '../router/route';
 </template>
 
 <script lang="ts">
-import Category from "../components/categories/Category.vue";
 import { defineComponent } from "vue";
 import { CategoryService } from "@/services/categoryService";
 import AddModel from "../components/AddModel.vue";
@@ -108,6 +107,6 @@ export default defineComponent({
       }
     }
   },
-  components: { Category, AddModel, ModelRow },
+  components: { AddModel, ModelRow },
 });
 </script>
