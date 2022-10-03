@@ -49,12 +49,12 @@ namespace Saitynai.Controllers
         // PUT: api/Songs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSong(int id, SongDTO request)
+        public async Task<ActionResult<Song>> PutSong(int id, SongDTO request)
         {
-            var playlist = GetUserPlaylists().FirstOrDefault(x => x.PlaylistId == request.PlaylistID);
+            var playlist = GetUserPlaylists().FirstOrDefault(x => x.PlaylistId == request.PlaylistId);
             if (playlist == null)
             {
-                return BadRequest($"PlaylistId {request.PlaylistID} does not found");
+                return BadRequest($"PlaylistId {request.PlaylistId} does not found");
             }
 
             var song = GetSongById(id);
@@ -79,7 +79,7 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(song);
         }
 
         // POST: api/Songs
@@ -87,10 +87,10 @@ namespace Saitynai.Controllers
         [HttpPost]
         public async Task<ActionResult<Song>> PostSong(SongDTO request)
         {
-            var playlist = GetUserPlaylist(request.PlaylistID);
+            var playlist = GetUserPlaylist(request.PlaylistId);
             if (playlist == null)
             {
-                return BadRequest($"PlaylistId {request.PlaylistID} does not found");
+                return BadRequest($"PlaylistId {request.PlaylistId} does not found");
             }
 
             var song = new Song()

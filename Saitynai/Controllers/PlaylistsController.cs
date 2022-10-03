@@ -97,8 +97,9 @@ namespace Saitynai.Controllers
         // PUT: api/Playlists/{id}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlaylist(int id, PlaylistDTO request)
+        public async Task<ActionResult<Playlist>> PutPlaylist(int id, PlaylistDTO request)
         {
+            // TODO playlist dto does not need to have categroyID
             // TODO check if request.categorie exists and if class props are valid
             var playlist = GetUserPlaylist(id);
 
@@ -106,9 +107,9 @@ namespace Saitynai.Controllers
             {
                 BadRequest("Playlist url does not exists");
             }
-
+            
             playlist.Url = request.Url;
-            playlist.Title = request.PlaylistName;
+            playlist.Title = request.Title;
             _context.Entry(playlist).State = EntityState.Modified;
 
             try
@@ -127,7 +128,7 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(playlist);
         }
 
         // POST: api/Playlists
@@ -135,6 +136,7 @@ namespace Saitynai.Controllers
         [HttpPost]
         public async Task<ActionResult<Playlist>> PostPlaylist(PlaylistDTO request)
         {
+            // TODO test middleware, url cannot be null...
             // TODO if user deletes playlist, also delete songs...
             if (_context.Playlists == null)
             {
@@ -149,7 +151,7 @@ namespace Saitynai.Controllers
 
             Playlist playlist = new Playlist()
             {
-                Categorie = category, Created = DateTime.Now, Title = request.PlaylistName, Songs = new List<Song>(),
+                Categorie = category, Created = DateTime.Now, Title = request.Title, Songs = new List<Song>(),
                 Url = request.Url
             };
             _context.Playlists.Add(playlist);
