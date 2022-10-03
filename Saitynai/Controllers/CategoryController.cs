@@ -45,8 +45,8 @@ namespace Saitynai.Controllers
         }
 
         // GET: api/Category/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategorie(int id)
+        [HttpGet("{id}/playlists")]
+        public async Task<ActionResult<IEnumerable<Playlist>>> GetCategoriePlaylists(int id)
         {
             if (_context.Category == null)
             {
@@ -61,6 +61,83 @@ namespace Saitynai.Controllers
                 return NotFound($"CategoryId {id} does not found");
             }
 
+            return category.Playlists;
+        }
+
+        [HttpGet("{id}/playlists/{playlistId}/songs")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetCategoriePlaylistsSongs(int id, int playlistId)
+        {
+            if (_context.Category == null)
+            {
+                return NotFound();
+            }
+
+            var user = GetCurrentUser();
+            var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
+
+            if (category == null)
+            {
+                return NotFound($"CategoryId {id} does not found");
+            }
+
+            var playlist = category.Playlists.FirstOrDefault(x => x.PlaylistId == playlistId);
+            if (playlist == null)
+            {
+                return BadRequest($"Playlist id not found");
+            }
+
+            return playlist.Songs;
+        }
+
+        // TODO do not use custom class, maybe there is possible to use models...
+        [HttpGet("{id}/details")]
+        public async Task<ActionResult<CategoryDetails>> GetCategorieDetails(int id)
+        {
+            if (_context.Category == null)
+            {
+                return NotFound();
+            }
+
+            var user = GetCurrentUser();
+            var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
+
+            if (category == null)
+            {
+                return NotFound($"CategoryId {id} does not found");
+            }
+
+            List<PlaylistDetails> playlistDetails = new List<PlaylistDetails>();
+            foreach (var p in category.Playlists)
+            {
+                PlaylistDetails newPlaylistDetails = new PlaylistDetails()
+                    { Created = p.Created, Url = p.Url, Title = p.Title, PlaylistId = p.PlaylistId, Songs = p.Songs };
+                playlistDetails.Add(newPlaylistDetails);
+            }
+
+
+            CategoryDetails categoryDetails = new CategoryDetails()
+                { CategoryId = category.CategoryId, Name = category.Name, Playlists = playlistDetails };
+
+            return categoryDetails;
+        }
+
+        // GET: api/Category/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Category>> GetCategorie(int id)
+        {
+            if (_context.Category == null)
+            {
+                return NotFound();
+            }
+        
+            var user = GetCurrentUser();
+            var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
+        
+            if (category == null)
+            {
+                return NotFound($"CategoryId {id} does not found");
+            }
+        
             return category;
         }
 
@@ -114,7 +191,7 @@ namespace Saitynai.Controllers
 
             var user = GetCurrentUser();
 
-
+            // TODO use category id, not name....
             Category newCategory = new Category()
                 { Name = request.Name, User = user, Playlists = new List<Playlist>() };
 

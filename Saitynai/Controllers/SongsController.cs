@@ -51,11 +51,6 @@ namespace Saitynai.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSong(int id, SongDTO request)
         {
-            if (id != request.SongId)
-            {
-                return BadRequest();
-            }
-
             var playlist = GetUserPlaylists().FirstOrDefault(x => x.PlaylistId == request.PlaylistID);
             if (playlist == null)
             {

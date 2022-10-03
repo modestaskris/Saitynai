@@ -44,7 +44,7 @@ namespace Saitynai.Controllers
             }
 
             List<Playlist> playlists = new List<Playlist>();
-            
+
             foreach (var c in categories)
             {
                 foreach (var p in c.Playlists)
@@ -75,6 +75,25 @@ namespace Saitynai.Controllers
             return playlist;
         }
 
+        // GET: api/Playlists/{id}
+        [HttpGet("{id}/songs")] // TODO probably bad request type
+        public async Task<ActionResult<IEnumerable<Song>>> GetPlaylistSongs(int id)
+        {
+            if (_context.Playlists == null)
+            {
+                return NotFound();
+            }
+
+            var playlist = GetUserPlaylist(id);
+
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+
+            return playlist.Songs;
+        }
+
         // PUT: api/Playlists/{id}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -89,7 +108,7 @@ namespace Saitynai.Controllers
             }
 
             playlist.Url = request.Url;
-            playlist.Title= request.PlaylistName;
+            playlist.Title = request.PlaylistName;
             _context.Entry(playlist).State = EntityState.Modified;
 
             try
@@ -122,10 +141,10 @@ namespace Saitynai.Controllers
                 return Problem("Entity set 'DataContext.Playlists'  is null.");
             }
 
-            var category = GetCategorie(request.CategorieName);
+            var category = GetCategory(request.CategoryId);
             if (category == null)
             {
-                return BadRequest($"Category {request.CategorieName} does not exists");
+                return BadRequest($"Category {request.CategoryId} does not exists");
             }
 
             Playlist playlist = new Playlist()
@@ -134,12 +153,12 @@ namespace Saitynai.Controllers
                 Url = request.Url
             };
             _context.Playlists.Add(playlist);
-            
+
             category.Playlists.Add(playlist);
 
             _context.Entry(category).State = EntityState.Modified;
             // TODO maybe here is no need to update category, because it only creates foreign key
-            
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -195,17 +214,18 @@ namespace Saitynai.Controllers
                 .FirstOrDefault(x => x.Username.Equals(User));
         }
 
-        private Category? GetCategorie(string categName)
+        private Category? GetCategory(int categId)
         {
             // TODO include playlists
-            var categorie = GetCurrentUser().Categories.Find(x => x.Name.Equals(categName));
-            if (categorie == null)
+            var category = GetCurrentUser().Categories.Find(x => x.CategoryId.Equals(categId));
+            if (category == null)
             {
-                // throw new Exception($"Category {categName} not found");
+                // throw new Exception($"Category {categId} not found");
                 // TODO add LOGGING
                 return null;
             }
-            return categorie;
+
+            return category;
         }
 
         private Playlist? GetUserPlaylist(int id)
@@ -229,6 +249,7 @@ namespace Saitynai.Controllers
                 // TODO add logging
                 return null;
             }
+
             return playlist;
         }
     }
