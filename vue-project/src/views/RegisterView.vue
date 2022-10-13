@@ -11,7 +11,6 @@
                 Password
                 <a className="text-xs">(at least 5 characters)</a>
             </div>
-            
             <input 
                 v-model="Password"
                 type='password' 
@@ -83,7 +82,7 @@ export default {
             // Validating passwords match
             const passowrdsMatch = this.validatePassowrds();
             if(!passowrdsMatch){
-                this.password = '';
+                this.Password = '';
                 this.Repassword = '';
 
                 this.MyError.active = true;

@@ -1,20 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue";
+import LayoutView from "./views/LayoutView.vue";
 </script>
 
 <template>
-  <Navbar/>
-
-  <RouterView />
+  <LayoutView/>
 </template>
-
-<script lang="ts">
-export default {
-  data(){
-    return{
-
-    }
-  }
-}
-</script>

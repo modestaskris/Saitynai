@@ -26,6 +26,7 @@ import route from "@/router/route";
 import { defineComponent } from "vue";
 import { CategoryService } from "@/services/categoryService";
 import { PlaylistService } from "@/services/playlistService";
+import type { AxiosInstance, AxiosResponse } from "axios";
 
 interface IPlaylist {
   playlistId: number;
@@ -43,7 +44,18 @@ export default defineComponent({
   methods: {
     async getPlaylists() {
       const categ = this.categoryId;
-      const resp = await CategoryService.getPlaylists(categ);
+      var resp: AxiosResponse; // TODO: maybe does not require to initialize...
+      if(categ){
+        // todo if false, 
+        // fetches playlist of selected category
+        console.log("fetching playlists by category");
+        resp = await CategoryService.getPlaylists(categ);
+      } else {
+        // fetches all playlists
+        console.log("fetching all playlists..");
+        resp = await PlaylistService.getList();
+      }
+      // await CategoryService.getPlaylists(categ);
       if (resp.status === 200) {
         this.playlists = resp.data;
       } else {

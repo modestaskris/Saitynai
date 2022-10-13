@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import { AuthService } from '@/services/authService';
 import { defineComponent } from 'vue';
 </script>
 
 <template>
-    <div class="justify-center flex mb-4">
-        <div class="flex justify-center bg-stone-200 p-2 rounded-b-full w-3/4">
-            <div>
-                <RouterLink to='/register' class="mx-2">Register</RouterLink>
-            </div>
-            <div>
-                <RouterLink to="/login">Login</RouterLink>
-            </div>
-            <div>
-                <RouterLink to="/categories">Categories</RouterLink>
+    <div>
+        <div class="p-2 bg-gray-800 text-white font-semibold">
+            <div class="justify-between flex">
+                <div>
+                    Saitynai
+                </div>
+                <div>
+                    <RouterLink to='/register' class="mx-2">Register</RouterLink>
+                    <RouterLink to="/login" class="mx-2">Login</RouterLink>
+                    <button class="mx-2" @click="onLogout">Logout</button>
+                </div>
             </div>
         </div>
     </div>
@@ -20,10 +22,10 @@ import { defineComponent } from 'vue';
 
 <script lang="ts">
 export default defineComponent({
-    data() {
-        return {
+    methods: {
+        onLogout() {
+            AuthService.logout();
         }
     }
-
 })
 </script>
