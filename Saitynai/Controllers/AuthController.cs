@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Saitynai.Classes;
@@ -79,6 +79,23 @@ namespace Saitynai.Controllers
             
             return Ok(token);
         }
+        
+        [HttpGet("token"), Authorize]
+        public async Task<IActionResult> Token()
+        {
+            var user = GetCurrentUser();
+
+            if (user == null)
+            {
+                return BadRequest("User does not exists");
+            }
+
+            // TODO maybe use token to create new token
+            
+            string token = CreateToken(user);
+            
+            return Ok(token);
+        }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -115,12 +132,27 @@ namespace Saitynai.Controllers
             // TODO add here jwt payload
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddMinutes(5), // expires in 5 minutes
                 signingCredentials: creds
             );
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        private User GetCurrentUser()
+        {
+            if(_dataContext == null)
+            {
+                throw new Exception("_dataContext is null");
+            }
+
+            if (User == null)
+            {
+                throw new Exception("User does not found");
+            }
+
+            return _dataContext.Users.Find(User);
         }
     }
 }

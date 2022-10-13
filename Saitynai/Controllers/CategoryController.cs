@@ -242,7 +242,6 @@ namespace Saitynai.Controllers
             {
                 throw new Exception("_context.Users is null");
             }
-
             return _context.Users
                 .Include(x => x.Categories)
                 .ThenInclude(x=> x.Playlists) // todo not include 
