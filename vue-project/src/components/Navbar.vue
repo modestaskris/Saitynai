@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { TokenService } from '@/services/tokenService';
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+import { AuthService } from '../services/authService';
 </script>
 
 <template>
@@ -22,9 +24,15 @@ import { defineComponent } from 'vue';
 
 <script lang="ts">
 export default defineComponent({
+    data(){
+        return {
+            router: useRouter()
+        }
+    },
     methods: {
         onLogout() {
-            TokenService.logout();
+            AuthService.logout();
+            this.router.push({ path: '/' });
         }
     }
 })

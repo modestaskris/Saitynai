@@ -8,10 +8,10 @@
             <RouterLink to="/playlists">Playlists</RouterLink>
         </li>
         <li>
-            <RouterLink to="/categories">Songs</RouterLink>
+            <RouterLink to="/songs">Songs</RouterLink>
         </li>
         <li>
-            <RouterLink to="/categories">Users</RouterLink>
+            <RouterLink to="/users">Users</RouterLink>
         </li>
     </div>
 </template>

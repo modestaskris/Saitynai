@@ -6,7 +6,7 @@ import route from "@/router/route";
 
 <template>
   <div>
-    <AddModelVue modelType="playlist" @create-button-pressed="createPlaylist" />
+    <AddModelVue v-if="playlistContainsInCategory" modelType="playlist" @create-button-pressed="createPlaylist" />
     <!-- TODO: endpoint returns all playlists... -->
     <ModelRow
       v-for="playlist in playlists"
@@ -27,6 +27,7 @@ import { defineComponent } from "vue";
 import { CategoryService } from "@/services/categoryService";
 import { PlaylistService } from "@/services/playlistService";
 import type { AxiosResponse } from "axios";
+import { useRoute } from "vue-router";
 
 interface IPlaylist {
   playlistId: number;
@@ -41,11 +42,17 @@ export default defineComponent({
       categoryId: parseInt(`${this.$route.params.categoryId}`),
     };
   },
+  computed:{
+    playlistContainsInCategory(){
+      const router = useRoute();
+      return router.path !== route.PLAYLISTS;
+    }
+  },
   methods: {
     async getPlaylists() {
       const categ = this.categoryId;
       var resp: AxiosResponse; // TODO: maybe does not require to initialize...
-      if(categ){
+      if(this.playlistContainsInCategory){
         // todo if false, 
         // fetches playlist of selected category
         console.log("fetching playlists by category");

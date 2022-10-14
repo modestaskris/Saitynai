@@ -40,6 +40,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddDbContext<DataContext>();
 
 
+// TODO naudoti automapper nugete yra, kaip DP naudot gal? AutoMapper, extension microsoft dependency injection
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

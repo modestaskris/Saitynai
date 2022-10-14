@@ -77,6 +77,15 @@ const router = createRouter({
         hideNavBar: false,
       },
     },
+    {
+      path: ROUTE.SONGS,
+      component: SongViewVue,
+      meta: {
+        middleware: auth,
+        hideMenu: false,
+        hideNavBar: false,
+      },
+    },
     // {
     //   path: "/",
     //   name: "home",
@@ -99,11 +108,6 @@ router.beforeEach((to, from, next) => {
   if (noAuthRoutes.includes(to.path)) {
     return next();
   };
-  console.log(noAuthRoutes.includes(to.path));
-  // console.log(from)
-  // console.log(to);
-  // console.log(from);
-  // console.log(next);
   const tokenIsValid = TokenService.tokenIsValid();
   if (!tokenIsValid) {
     // TODO: navigate to /login?
@@ -113,6 +117,8 @@ router.beforeEach((to, from, next) => {
   return next();
 });
 
+
+// maybe good implementation, but not used due to complexity(not needed)
 // function nextFactory(context:any, middleware:any, index:any) {
 //   const subsequentMiddleware = middleware[index];
 //   // If no subsequent Middleware exists,
