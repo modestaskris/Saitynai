@@ -7,7 +7,7 @@ import LandingView from "@/views/LandingView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import auth from "./authMiddleware";
 import ROUTE from "./route";
-import { AuthService } from "@/services/authService";
+import { TokenService } from "@/services/TokenService";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -93,19 +93,26 @@ const router = createRouter({
   ],
 });
 
-// TODO: only testing router things...
+const noAuthRoutes = [ROUTE.LOGIN, ROUTE.REGISTER, ROUTE.LANDING];
+
 router.beforeEach((to, from, next) => {
+  if (noAuthRoutes.includes(to.path)) {
+    return next();
+  };
+  console.log(noAuthRoutes.includes(to.path));
+  // console.log(from)
   // console.log(to);
   // console.log(from);
   // console.log(next);
-  const tokenIsValid = AuthService.tokenExists() || false;
-  console.log(tokenIsValid);
+  const tokenIsValid = TokenService.tokenIsValid();
   if (!tokenIsValid) {
     // TODO: navigate to /login?
+    router.push('/login');
     return;
   }
   return next();
 });
+
 // function nextFactory(context:any, middleware:any, index:any) {
 //   const subsequentMiddleware = middleware[index];
 //   // If no subsequent Middleware exists,

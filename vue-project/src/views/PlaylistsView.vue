@@ -26,7 +26,7 @@ import route from "@/router/route";
 import { defineComponent } from "vue";
 import { CategoryService } from "@/services/categoryService";
 import { PlaylistService } from "@/services/playlistService";
-import type { AxiosInstance, AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 
 interface IPlaylist {
   playlistId: number;

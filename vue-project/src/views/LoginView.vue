@@ -49,8 +49,9 @@
 import { AuthService } from '@/services/authService';
 import type { IUser } from '@/models/user/user';
 import ROUTE from '../router/route';
-
 import { defineComponent } from 'vue';
+import { TokenService } from '@/services/TokenService';
+
 export default defineComponent({
     data(){
         return{
@@ -76,7 +77,7 @@ export default defineComponent({
             console.log(resp);
             if(resp.status == 200){
                 // TODO save token...
-                AuthService.saveToken(resp.data);
+                TokenService.saveToken(resp.data);
                 this.$router.push({path: ROUTE.CATEGORIES});
             } else {
                 // todo show errors...

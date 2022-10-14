@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthService } from '@/services/authService';
+import { TokenService } from '@/services/tokenService';
 import { defineComponent } from 'vue';
 </script>
 
@@ -24,7 +24,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     methods: {
         onLogout() {
-            AuthService.logout();
+            TokenService.logout();
         }
     }
 })

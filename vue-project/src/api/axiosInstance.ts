@@ -1,6 +1,6 @@
+import { TokenService } from "@/services/tokenService";
 import axios from "axios";
 import { BaseUrl } from "./endpoints";
-import { AuthService } from "@/services/authService";
 
 export const AxiosInstance = axios.create({
   baseURL: BaseUrl,
@@ -9,8 +9,8 @@ export const AxiosInstance = axios.create({
 
 const getToken = () => {
   // TODO: token() throws exception;
-//   var token = AuthService.token();
-    var token = '';
+  var token = TokenService.token();
+  // var token = "";
   return token;
 };
 
