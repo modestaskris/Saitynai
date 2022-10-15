@@ -11,13 +11,25 @@ const getToken = () => {
   // TODO: token() throws exception;
   var token = TokenService.token();
   // var token = "";
+  console.log(`using token: ${token}`);
   return token;
 };
 
-export const AxiosAuthInstance = axios.create({
-  baseURL: BaseUrl,
-  headers: {
-    Authorization: `Bearer ${getToken()}`,
-    "Access-Control-Allow-Origin": "*",
-  },
-});
+// export const AxiosAuthInstance = axios.create({
+//   baseURL: BaseUrl,
+//   headers: {
+//     Authorization: `Bearer ${getToken()}`,
+//     "Access-Control-Allow-Origin": "*",
+//   },
+// });
+
+export const AxiosAuthInstance = () => {
+  // for every request return new instance
+  return axios.create({
+    baseURL: BaseUrl,
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+};

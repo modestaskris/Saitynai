@@ -1,3 +1,4 @@
+import { AxiosAuthInstance } from "@/api/axiosInstance";
 import { LocalStorageService } from "./localStorageService";
 
 const tokenKey = "yps_jwt_token";
@@ -47,7 +48,7 @@ export const TokenService = {
 
   tokenIsValid() {
     const token = this.token();
-    if (typeof(token) !== 'string') {
+    if (typeof token !== "string") {
       return false;
     }
     const parsedToken = this.parsedJwtToken();
@@ -55,5 +56,36 @@ export const TokenService = {
       return false;
     }
     return true;
-  }
+  },
+
+  async fetchToken(): Promise<string> {
+    const token: string = await (
+      await AxiosAuthInstance().get("/api/auth/token")
+    ).data;
+    return token;
+  },
+
+  async updateToken(){
+    const token = await this.fetchToken();
+    console.log(`New token: ${token}`);
+    TokenService.saveToken(token);
+  },
+
+  async updateTokenInterval() {
+    const tokenIsValid = TokenService.tokenIsValid();
+    if (tokenIsValid) {
+      console.log("Starting token update...");
+      try {
+        this.updateToken();
+        setInterval(async () => {
+          this.updateToken();
+        // }, 4 * 60 * 1000); // refreshes every minute
+        }, 1 * 60 * 1000); // refreshes every minute
+      } catch (err) {
+        throw new Error("Exception occured while updating token");
+      }
+    } else {
+      console.error("Token is not valid...");
+    }
+  },
 };

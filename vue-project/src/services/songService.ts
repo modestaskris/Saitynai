@@ -9,22 +9,22 @@ interface ISongDTO {
 
 export const SongService = {
     async getList(){
-        return await AxiosAuthInstance.get(ENDPOINT.Songs)
+        return await AxiosAuthInstance().get(ENDPOINT.Songs)
     },
     async getPlaylistList(id: number){
-        return await AxiosAuthInstance.get(ENDPOINT.Playlists + `/${id}` + '/songs')
+        return await AxiosAuthInstance().get(ENDPOINT.Playlists + `/${id}` + '/songs')
     },
     async create(obj: ISongDTO){
-        return await AxiosAuthInstance.post(ENDPOINT.Songs, obj);
+        return await AxiosAuthInstance().post(ENDPOINT.Songs, obj);
     },
     async get(id:number){
-        return await AxiosAuthInstance.get(ENDPOINT.Songs+ `/${id}`);
+        return await AxiosAuthInstance().get(ENDPOINT.Songs+ `/${id}`);
     },
     async update(id:Number, obj: ISongDTO){
-        return await AxiosAuthInstance.put(ENDPOINT.Songs+ `/${id}`, obj);
+        return await AxiosAuthInstance().put(ENDPOINT.Songs+ `/${id}`, obj);
     },
     async delete(id:Number){
-        return await AxiosAuthInstance.delete(ENDPOINT.Songs+ `/${id}`);
+        return await AxiosAuthInstance().delete(ENDPOINT.Songs+ `/${id}`);
     },
 }
 

@@ -22,19 +22,19 @@ interface IRequest{
 
 export const PlaylistService = {
     async getList(){
-        return await AxiosAuthInstance.get(ENDPOINT.Playlists)
+        return await AxiosAuthInstance().get(ENDPOINT.Playlists)
     },
     async create(obj: IPlaylistDTO){
-        return await AxiosAuthInstance.post(ENDPOINT.Playlists, obj);
+        return await AxiosAuthInstance().post(ENDPOINT.Playlists, obj);
     },
     async get(id:number){
-        return await AxiosAuthInstance.get(ENDPOINT.Playlists+ `/${id}`);
+        return await AxiosAuthInstance().get(ENDPOINT.Playlists+ `/${id}`);
     },
     async update(id:Number, obj: IPlaylistDTO){
-        return await AxiosAuthInstance.put(ENDPOINT.Playlists+ `/${id}`, obj);
+        return await AxiosAuthInstance().put(ENDPOINT.Playlists+ `/${id}`, obj);
     },
     async delete(id:Number){
-        return await AxiosAuthInstance.delete(ENDPOINT.Playlists+ `/${id}`);
+        return await AxiosAuthInstance().delete(ENDPOINT.Playlists+ `/${id}`);
     },
 }
 
