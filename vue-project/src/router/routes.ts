@@ -117,7 +117,6 @@ router.beforeEach((to, from, next) => {
   return next();
 });
 
-
 // maybe good implementation, but not used due to complexity(not needed)
 // function nextFactory(context:any, middleware:any, index:any) {
 //   const subsequentMiddleware = middleware[index];

@@ -2,17 +2,17 @@
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
 import route from "@/router/route";
+import PageHeader from '@/components/PageHeader.vue';
 </script>
     
 <template>
   <div>
-    <AddModelVue v-if="!songContainsToPlaylist"
-    modelType="song" @create-button-pressed="createSong" />
-    <!-- TODO: endpoint returns all playlists... -->
+    <PageHeader label="Songs">
+      <AddModelVue v-if="!songContainsToPlaylist" modelType="song" @create-button-pressed="createSong" />
+    </PageHeader>
     <ModelRow v-for="song in songs" v-bind:key="song.songId" @deleteModel="deleteSong" @editModel="editSong"
       :modelId="song.songId" :name="song.songId + `song`" :url="song.url" :route-root="route.PLAYLISTS"
       model-type="song" />
-    <!--   :route-root="route.PLAYLISTS"  TODO: -->
   </div>
 </template>
     

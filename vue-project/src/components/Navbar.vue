@@ -7,15 +7,22 @@ import { AuthService } from '../services/authService';
 
 <template>
     <div>
-        <div class="p-2 bg-gray-800 text-white font-semibold">
+        <div class="m-4 rounded-lg p-4 bg-gray-800 text-white font-semibold">
             <div class="justify-between flex">
                 <div>
                     Saitynai
                 </div>
                 <div>
-                    <RouterLink to='/register' class="mx-2">Register</RouterLink>
-                    <RouterLink to="/login" class="mx-2">Login</RouterLink>
-                    <button class="mx-2" @click="onLogout">Logout</button>
+                    <RouterLink to='/register' class="mx-2 hover:bg-gray-600 rounded-xl p-1 py-2">
+                        <font-awesome-icon icon="fa-solid fa-user-plus " class="mr-1" />Register
+                    </RouterLink>
+                    <RouterLink to="/login" class="mx-2 hover:bg-gray-600 rounded-xl p-1">
+                        <font-awesome-icon icon="fa-solid fa-arrow-right-to-bracket" class="mr-1" />
+                        Login
+                    </RouterLink>
+                    <button class="mx-2 hover:bg-gray-600 rounded-xl p-1" @click="onLogout">
+                        <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" class="mr-1" />Logout
+                    </button>
                 </div>
             </div>
         </div>
@@ -24,7 +31,7 @@ import { AuthService } from '../services/authService';
 
 <script lang="ts">
 export default defineComponent({
-    data(){
+    data() {
         return {
             router: useRouter()
         }
@@ -32,7 +39,7 @@ export default defineComponent({
     methods: {
         onLogout() {
             AuthService.logout();
-            this.router.push({ path: '/' });
+            this.router.push({ path: '/login' });
         }
     }
 })

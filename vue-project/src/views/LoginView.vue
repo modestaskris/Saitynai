@@ -6,14 +6,14 @@
             </div>
             <input
                 v-model="Username"
-                className="border-gray-900 border-2 p-0 rounded-lg"/>
+                className="border-gray-900 border-2 p-1 rounded-lg"/>
             <div>
                 Password
             </div>
             <input 
                 v-model="Password"
                 type='password' 
-                className="border-gray-900 border-2 p-0 rounded-lg" 
+                className="border-gray-900 border-2 p-1 rounded-lg" 
             />
             <div className='flex justify-center'>
                 <button 
@@ -72,9 +72,7 @@ export default defineComponent({
                 username: this.Username,
                 password: this.Password
             }
-
             const resp = await AuthService.login(user);
-            console.log(resp);
             if(resp.status == 200){
                 // TODO save token...
                 TokenService.saveToken(resp.data);

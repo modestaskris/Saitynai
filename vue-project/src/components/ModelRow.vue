@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import route from "@/router/route";
 import { CategoryService } from "@/services/categoryService";
 import EditModel from "./EditModel.vue";
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between bg-zinc-600 rounded-3xl m-1 p-2" @click="(e) => navigate(e)">
     <!-- TODO: use variable as prop to pass route... -->
-    <RouterLink
-      v-if="!isSong"
-      :to="`${routeRoot}/${modelId}`"
-      class="font-semibold bg-blue-400 text-white p-1 m-1 rounded-lg"
-    >
+    <RouterLink v-if="!isSong" :to="`${routeRoot}/${modelId}`" class="font-semibold text-white p-1 m-1 rounded-lg">
       <!-- TODO use router link -->
       {{ name }}
     </RouterLink>
@@ -25,21 +21,13 @@ import EditModel from "./EditModel.vue";
     </div>
     <div>
       <div class="flex justify-end">
-        <EditModel
-          @editModelPressed="editModelClicked"
-          :model-name="name"
-          :model-type="modelType"
-        />
-        <button
-          @click="deleteModelClicked"
-          class="bg-red-200 mx-1 p-1 rounded-lg"
-        >
+        <EditModel @editModelPressed="editModelClicked" :model-name="name" :model-type="modelType" />
+        <button @click="deleteModelClicked" class="bg-red-200 mx-1 p-1 rounded-lg">
           Remove
         </button>
       </div>
     </div>
   </div>
-  <hr />
 </template>
     
 <script lang="ts">
@@ -87,6 +75,14 @@ export default defineComponent({
         // TODO emit not implemented.. or throw error
       }
     },
+    navigate(e: any) {
+      console.log(e);
+      console.log(e.bubbles);
+      // e.stopPropagation();
+      // console.log("navigating...");
+      // TODO: if buttons are clicked, ignore routing...
+      // this.$router.push(`${this.routeRoot}/${this.modelId}`);
+    }
   },
 });
 </script>

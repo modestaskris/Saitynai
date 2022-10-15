@@ -2,23 +2,18 @@
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
 import route from "@/router/route";
+import PageHeader from '@/components/PageHeader.vue';
 </script>
 
 <template>
   <div>
-    <AddModelVue v-if="playlistContainsInCategory" modelType="playlist" @create-button-pressed="createPlaylist" />
+    <PageHeader label="Playlists">
+      <AddModelVue v-if="playlistContainsInCategory" modelType="playlist" @create-button-pressed="createPlaylist" />
+    </PageHeader>
     <!-- TODO: endpoint returns all playlists... -->
-    <ModelRow
-      v-for="playlist in playlists"
-      v-bind:key="playlist.playlistId"
-      @deleteModel="deletePlaylist"
-      @editModel="editPlaylist"
-      :modelId="playlist.playlistId"
-      :name="playlist.title"
-      :url="playlist.url"
-      :route-root="route.PLAYLISTS"
-      model-type="playlist"
-    />
+    <ModelRow v-for="playlist in playlists" v-bind:key="playlist.playlistId" @deleteModel="deletePlaylist"
+      @editModel="editPlaylist" :modelId="playlist.playlistId" :name="playlist.title" :url="playlist.url"
+      :route-root="route.PLAYLISTS" model-type="playlist" />
   </div>
 </template>
 
@@ -42,8 +37,8 @@ export default defineComponent({
       categoryId: parseInt(`${this.$route.params.categoryId}`),
     };
   },
-  computed:{
-    playlistContainsInCategory(){
+  computed: {
+    playlistContainsInCategory() {
       const router = useRoute();
       return router.path !== route.PLAYLISTS;
     }
@@ -52,7 +47,7 @@ export default defineComponent({
     async getPlaylists() {
       const categ = this.categoryId;
       var resp: AxiosResponse; // TODO: maybe does not require to initialize...
-      if(this.playlistContainsInCategory){
+      if (this.playlistContainsInCategory) {
         // todo if false, 
         // fetches playlist of selected category
         console.log("fetching playlists by category");

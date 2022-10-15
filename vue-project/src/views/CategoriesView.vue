@@ -1,23 +1,17 @@
 <script setup lang="ts">
 import route from '../router/route';
-
+import PageHeader from '../components/PageHeader.vue';
 </script>
 
 <template>
-  <div>
+  <PageHeader label="Categories">
     <AddModel @createButtonPressed="addNewCategory" modelType="category" />
-    <hr />
+  </PageHeader>
+  <div>
     <div>
-      <ModelRow
-        v-for="playlist in categories"
-        v-bind:key="playlist.categoryId"
-        @deleteModel="deleteCategoryFromCategories"
-        @editModel="updateCategory"
-        :modelId="playlist.categoryId"
-        :name="playlist.name"
-        :routeRoot="route.CATEGORIES"
-        modelType="category"
-      />
+      <ModelRow v-for="playlist in categories" v-bind:key="playlist.categoryId"
+        @deleteModel="deleteCategoryFromCategories" @editModel="updateCategory" :modelId="playlist.categoryId"
+        :name="playlist.name" :routeRoot="route.CATEGORIES" modelType="category" />
     </div>
   </div>
 </template>
@@ -86,18 +80,18 @@ export default defineComponent({
         console.error("Delete didnt work");
       }
     },
-    async updateCategory(categId: Number, newName: string){
+    async updateCategory(categId: Number, newName: string) {
       console.log(categId);
       const obj = this.categories.find(x => x.categoryId === categId);
       const resp = await CategoryService.update(categId, {
         name: newName
       });
       console.log(resp);
-      if(resp.status === 204){
+      if (resp.status === 204) {
         // success... replace old data with new...
         // TODO: 
         this.categories = this.categories.map(x => {
-          if(x.categoryId == categId){
+          if (x.categoryId == categId) {
             x.name = newName
           }
           return x;

@@ -6,7 +6,7 @@
             </div>
             <input
                 v-model="Username"
-                className="border-gray-900 border-2 p-0 rounded-lg"/>
+                className="border-gray-900 border-2 p-1 rounded-lg"/>
             <div>
                 Password
                 <a className="text-xs">(at least 5 characters)</a>
@@ -14,7 +14,7 @@
             <input 
                 v-model="Password"
                 type='password' 
-                className="border-gray-900 border-2 p-0 rounded-lg" 
+                className="border-gray-900 border-2 p-1 rounded-lg" 
             />
             <div>
                 Re-enter password
@@ -22,7 +22,7 @@
             <input 
                 v-model="Repassword"
                 type='password' 
-                className="border-gray-900 border-2 p-0 rounded-lg" />
+                className="border-gray-900 border-2 p-1 rounded-lg" />
             <div className='flex justify-center'>
                 <button 
                     @click="register"
