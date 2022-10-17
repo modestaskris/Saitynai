@@ -8,6 +8,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import auth from "./authMiddleware";
 import ROUTE from "./route";
 import { TokenService } from "@/services/TokenService";
+import NotFoundViewVue from '@/views/NotFoundView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,38 +17,25 @@ const router = createRouter({
       path: ROUTE.LANDING,
       name: "landing",
       component: LandingView,
-      meta: {
-        hideMenu: true,
-        hideNavBar: true,
-      },
     },
     {
       path: ROUTE.REGISTER,
       name: "register",
       component: RegisterViewVue,
-      meta: {
-        hideMenu: true,
-        hideNavBar: true,
-      },
     },
     {
       path: ROUTE.LOGIN,
       name: "login",
       component: LoginViewVue,
-      meta: {
-        hideMenu: true,
-        hideNavBar: true,
-      },
     },
     {
       path: ROUTE.CATEGORIES,
       name: "categories",
       component: CategoriesViewVue,
       meta: {
-        requiresAuth: true,
-        // middleware: auth,
-        hideMenu: false,
-        hideNavBar: false,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
       },
     },
     {
@@ -55,8 +43,9 @@ const router = createRouter({
       component: PlaylistsViewVue,
       meta: {
         middleware: auth,
-        hideMenu: false,
-        hideNavBar: false,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
       },
     },
     {
@@ -64,8 +53,9 @@ const router = createRouter({
       component: PlaylistsViewVue,
       meta: {
         middleware: auth,
-        hideMenu: false,
-        hideNavBar: false,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
       },
     },
     {
@@ -73,8 +63,9 @@ const router = createRouter({
       component: SongViewVue,
       meta: {
         middleware: auth,
-        hideMenu: false,
-        hideNavBar: false,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
       },
     },
     {
@@ -82,9 +73,24 @@ const router = createRouter({
       component: SongViewVue,
       meta: {
         middleware: auth,
-        hideMenu: false,
-        hideNavBar: false,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
       },
+    },
+    {
+      path: ROUTE.SONGS,
+      component: SongViewVue,
+      meta: {
+        middleware: auth,
+        displayMenu: true,
+        displayNavBar: true,
+        displayFooter: true,
+      },
+    },
+    {
+      path: ROUTE.NOTFOUND,
+      component: NotFoundViewVue,
     },
     // {
     //   path: "/",
@@ -100,9 +106,11 @@ const router = createRouter({
     //   component: () => import("../views/AboutView.vue"),
     // },import { ROUTE } from './route';
   ],
+
+
 });
 
-const noAuthRoutes = [ROUTE.LOGIN, ROUTE.REGISTER, ROUTE.LANDING];
+const noAuthRoutes = [ROUTE.LOGIN, ROUTE.REGISTER, ROUTE.LANDING, ROUTE.NOTFOUND];
 
 router.beforeEach((to, from, next) => {
   if (noAuthRoutes.includes(to.path)) {
@@ -114,43 +122,9 @@ router.beforeEach((to, from, next) => {
     router.push('/login');
     return;
   }
+  console.log(`Going to route: ${to.path}`)
+
   return next();
 });
-
-// maybe good implementation, but not used due to complexity(not needed)
-// function nextFactory(context:any, middleware:any, index:any) {
-//   const subsequentMiddleware = middleware[index];
-//   // If no subsequent Middleware exists,
-//   // the default `next()` callback is returned.
-//   if (!subsequentMiddleware) return context.next;
-
-//   return (...parameters) => {
-//     // Run the default Vue Router `next()` callback first.
-//     context.next(...parameters);
-//     // Then run the subsequent Middleware with a new
-//     // `nextMiddleware()` callback.
-//     const nextMiddleware = nextFactory(context, middleware, index + 1);
-//     subsequentMiddleware({ ...context, next: nextMiddleware });
-//   };
-// }
-
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.middleware) {
-//     const middleware = Array.isArray(to.meta.middleware)
-//       ? to.meta.middleware
-//       : [to.meta.middleware];
-//     const context = {
-//       from,
-//       next,
-//       router,
-//       to,
-//     };
-//     const nextMiddleware = nextFactory(context, middleware, 1);
-
-//     return middleware[0]({ ...context, next: nextMiddleware });
-//   }
-
-//   return next();
-// });
 
 export default router;

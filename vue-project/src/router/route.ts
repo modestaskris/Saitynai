@@ -7,6 +7,7 @@ const CATEGORIES = "/categories";
 const PLAYLISTS = "/playlists";
 const SONGS = "/songs";
 const USERS = "/users";
+const NOTFOUND = "/:pathMatch(.*)*";
 
 export default {
   // Auth
@@ -18,4 +19,5 @@ export default {
   PLAYLISTS,
   SONGS,
   USERS,
+  NOTFOUND,
 };
