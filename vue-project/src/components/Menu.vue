@@ -26,7 +26,7 @@
             </li>
         </ul>
     </div>
-    <button class="my-7 bg-gray-700 hover:bg-gray-500 h-10 w-10 text-white text-center rounded-r-full"
+    <button class="my-7 bg-gray-700 hover:bg-gray-500 h-10 w-10 text-white text-center rounded-r-full me-4"
         @click="trigerMenuDisplay">
         <div v-if="displayMenu">
             <font-awesome-icon icon="fa-solid fa-angles-left" />

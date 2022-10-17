@@ -56,7 +56,6 @@ export default defineComponent({
       } else {
         resp = await SongService.getPlaylistList(playlistId);
       }
-
       if (resp.status === 200) {
         this.songs = resp.data;
       } else {

@@ -1,8 +1,6 @@
 <template>
   <!-- Modal toggle -->
-  <button
-    @click="onModalClick"
-    class="
+  <button @click="(e) => onModalClick(e)" class="
       block
       text-white
       bg-green-500
@@ -11,22 +9,15 @@
       font-medium
       rounded-lg
       text-sm
-      p-1
+      p-2
       text-center
-    "
-    type="button"
-    data-modal-toggle="authentication-modal"
-  >
+    " type="button" data-modal-toggle="authentication-modal">
+    <font-awesome-icon icon="fa-solid fa-pen" />
     Edit
   </button>
 
   <!-- Main modal -->
-  <div
-    :class="{ hidden: this.displayModal }"
-    id="authentication-modal"
-    tabindex="-1"
-    aria-hidden="true"
-    class="
+  <div :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
       overflow-y-auto overflow-x-hidden
       flex
       justifty-center
@@ -39,15 +30,11 @@
       md:inset-0
       h-modal
       md:h-full
-    "
-  >
+    ">
     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <button
-          @click="onModalClick"
-          type="button"
-          class="
+        <button @click="onModalClick" type="button" class="
             absolute
             top-3
             right-2.5
@@ -61,21 +48,12 @@
             inline-flex
             items-center
             dark:hover:bg-gray-800 dark:hover:text-white
-          "
-          data-modal-toggle="authentication-modal"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
+          " data-modal-toggle="authentication-modal">
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
               d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
+              clip-rule="evenodd"></path>
           </svg>
           <span class="sr-only">Close modal</span>
         </button>
@@ -86,23 +64,15 @@
           <div class="space-y-6" action="#">
             <!-- Renders only for category type -->
             <div v-if="isCategory">
-              <label
-                for="categ"
-                class="
+              <label for="categ" class="
                   block
                   mb-2
                   text-sm
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Type {{ modelName }} new name:</label
-              >
-              <input
-                v-model="newModelName"
-                type="text"
-                id="categ"
-                class="
+                ">Type {{ modelName }} new name:</label>
+              <input v-model="newModelName" type="text" id="categ" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -115,29 +85,18 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder=""
-                required
-              />
+                " placeholder="" required />
             </div>
             <div v-else-if="isPlaylist">
-              <label
-                for="playlistName"
-                class="
+              <label for="playlistName" class="
                   block
                   mb-2
                   text-sm
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Type {{ modelName }} new name:</label
-              >
-              <input
-                v-model="newModelName"
-                type="text"
-                id="playlistName"
-                class="
+                ">Type {{ modelName }} new name:</label>
+              <input v-model="newModelName" type="text" id="playlistName" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -150,13 +109,8 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder=""
-                required
-              />
-              <label
-                for="categ"
-                class="
+                " placeholder="" required />
+              <label for="categ" class="
                   my-4
                   block
                   mb-2
@@ -164,14 +118,8 @@
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Type {{ modelName }} new Url:</label
-              >
-              <input
-                v-model="newUrl"
-                type="text"
-                id="categ"
-                class="
+                ">Type {{ modelName }} new Url:</label>
+              <input v-model="newUrl" type="text" id="categ" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -184,15 +132,10 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder=""
-                required
-              />
+                " placeholder="" required />
             </div>
             <div v-else-if="isSong">
-              <label
-                for="song"
-                class="
+              <label for="song" class="
                   my-4
                   block
                   mb-2
@@ -200,14 +143,8 @@
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Type {{ modelName }} new Url:</label
-              >
-              <input
-                v-model="newUrl"
-                type="text"
-                id="song"
-                class="
+                ">Type {{ modelName }} new Url:</label>
+              <input v-model="newUrl" type="text" id="song" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -220,16 +157,11 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder=""
-                required
-              />
+                " placeholder="" required />
             </div>
             <div v-else>{{ modelType }} - is not implemented....</div>
             <!-- type="submit" -->
-            <button
-              @click="onUpdateModel"
-              class="
+            <button @click="onUpdateModel" class="
                 w-full
                 text-white
                 bg-blue-700
@@ -242,8 +174,7 @@
                 py-2.5
                 text-center
                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-              "
-            >
+              ">
               Update
             </button>
           </div>
@@ -283,7 +214,8 @@ export default defineComponent({
     },
   },
   methods: {
-    onModalClick() {
+    onModalClick(e: null|any) {
+      e.stopPropagation();
       this.displayModal = !this.displayModal;
     },
     async onUpdateModel() {
