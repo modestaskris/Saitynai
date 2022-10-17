@@ -194,7 +194,7 @@ export default defineComponent({
     modelName: String,
     modelType: String,
   },
-  emits: ["editModelPressed"],
+  emits: ["editModelPressed", "modalActivation"],
   data() {
     return {
       displayModal: true as boolean,
@@ -216,6 +216,7 @@ export default defineComponent({
   methods: {
     onModalClick(e: null|any) {
       e.stopPropagation();
+      this.$emit("modalActivation", this.displayModal);
       this.displayModal = !this.displayModal;
     },
     async onUpdateModel() {
@@ -224,7 +225,7 @@ export default defineComponent({
           this.showError();
           return;
         }
-        this.$emit("editModelPressed", this.newModelName);
+        this.$emit("modalActivation", this.newModelName);
       } else if (this.isPlaylist) {
         if (this.newModelName == "" || this.newUrl == "") {
           this.showError();

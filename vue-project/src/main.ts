@@ -43,3 +43,4 @@ app.mount("#app");
 
 // TODO: instantly after login app does not use token to fetch categories and does not update token... FIX CRITICAL
 // TODO: make /user route secure and accessable only for admin...
+// TODO: use grid in model row to guarantee absolute positions

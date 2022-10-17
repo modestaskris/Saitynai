@@ -9,8 +9,10 @@ import PageHeader from '../components/PageHeader.vue';
   </PageHeader>
   <div>
     <div>
-      <ModelRow v-for="playlist in categories" v-bind:key="playlist.categoryId"
-        @deleteModel="deleteCategoryFromCategories" @editModel="updateCategory" :modelId="playlist.categoryId"
+      <ModelRow v-for="(playlist, index) in categories" v-bind:key="playlist.categoryId"
+        @deleteModel="deleteCategoryFromCategories" @editModel="updateCategory" 
+        :index="index"
+        :modelId="playlist.categoryId"
         :name="playlist.name" :routeRoot="route.CATEGORIES" modelType="category" />
     </div>
   </div>

@@ -4,7 +4,7 @@
       block
       text-white
       bg-gray-800
-      hover:bg-gray-800
+      hover:bg-black
       focus:ring-4 focus:outline-none focus:ring-gray-500
       font-medium
       rounded-lg
@@ -15,9 +15,7 @@
     " type="button" data-modal-toggle="authentication-modal">
     Add {{ modelType }}
   </button>
-
-  <!-- Main modal -->
-  <div :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
+  <!-- "
       overflow-y-auto overflow-x-hidden
       flex
       justifty-center
@@ -30,8 +28,23 @@
       md:inset-0
       h-modal
       md:h-full
+    " -->
+  <!-- Main modal -->
+  <div :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
+  overflow-y-auto overflow-x-hidden
+      flex
+      justifty-center
+      fixed
+      top-0
+      right-0
+      left-0
+      z-50
+      w-full
+      md:inset-0
+      h-modal
+      md:h-full
     ">
-    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div class="relative p-1 w-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <button @click="onModalClick" type="button" class="
