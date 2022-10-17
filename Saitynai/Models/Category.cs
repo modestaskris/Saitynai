@@ -8,7 +8,7 @@ public class Category
     [Key] public int CategoryId  { get; set; }
     [Required] public string Name { get; set; }
     [JsonIgnore]
-    public List<Playlist> Playlists { get; set; } = new List<Playlist>();
+    public List<Playlist>? Playlists { get; set; } = new List<Playlist>();
     [JsonIgnore]
     public User User { get; set; }
 }

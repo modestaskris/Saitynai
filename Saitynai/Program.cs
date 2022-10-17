@@ -39,9 +39,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddDbContext<DataContext>();
 
-
-// TODO naudoti automapper nugete yra, kaip DP naudot gal? AutoMapper, extension microsoft dependency injection
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,15 +67,6 @@ app.MapControllers();
 
 app.Run();
 
-
-
-// appsettings example:
-//{
-//    "Logging": {
-//        "LogLevel": {
-//            "Default": "Information",
-//            "Microsoft.AspNetCore": "Warning"
-//        }
-//    },
-//    "AllowedHosts": "*"
-//}
+// TODO refactor model classes(remove JsonIgnore fields)
+// TODO add automapper https://automapper.org/
+// TODO naudoti automapper nugete yra, kaip DP naudot gal? AutoMapper, extension microsoft dependency injection

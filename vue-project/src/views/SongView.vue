@@ -10,8 +10,8 @@ import PageHeader from '@/components/PageHeader.vue';
     <PageHeader label="Songs">
       <AddModelVue v-if="!songContainsToPlaylist" modelType="song" @create-button-pressed="createSong" />
     </PageHeader>
-    <ModelRow v-for="song in songs" v-bind:key="song.songId" @deleteModel="deleteSong" @editModel="editSong"
-      :modelId="song.songId" :name="song.songId + `song`" :url="song.url" :route-root="route.PLAYLISTS"
+    <ModelRow v-for="(song, index) in songs" v-bind:key="song.songId" @deleteModel="deleteSong" @editModel="editSong"
+      :index="index" :modelId="song.songId" :name="song.songId + `song`" :url="song.url" :route-root="route.PLAYLISTS"
       model-type="song" />
   </div>
 </template>
