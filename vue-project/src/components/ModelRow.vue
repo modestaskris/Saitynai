@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
-import { RouterLink, useRoute } from "vue-router";
-import route from "@/router/route";
-import { CategoryService } from "@/services/categoryService";
+import { RouterLink } from "vue-router";
 import EditModel from "./EditModel.vue";
 </script>
 
 <template>
-  <div class="flex justify-between bg-zinc-600 rounded-3xl m-1 p-2" @click="(e) => navigate(e)">
+  <div class="flex justify-between bg-gray-400 rounded-3xl my-1 p-2 border-black border-4" @click="(e) => navigate(e)">
     <!-- TODO: use variable as prop to pass route... -->
-    <RouterLink v-if="!isSong" :to="`${routeRoot}/${modelId}`" class="font-semibold text-white p-1 m-1 rounded-lg">
+    <RouterLink v-if="!isSong" :to="`${routeRoot}/${modelId}`" class="font-semibold  p-1 m-1 rounded-lg">
       <!-- TODO use router link -->
       {{ name }}
     </RouterLink>
-    <a v-else class="font-semibold text-black p-1 m-1 rounded-lg">
+    <a v-else class="font-semibold  p-1 m-1 rounded-lg">
       {{ name }}
     </a>
-    <div v-if="url !== undefined">
-      <a :href="url"> link TODO update style</a>
-    </div>
+    <a v-if="url !== undefined" :href="url" class="font-semibold  p-1 m-1 rounded-lg hover:bg-gray-500">
+      <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" />
+      Link
+    </a>
     <div>
       <div class="flex justify-end">
         <EditModel @editModelPressed="editModelClicked" :model-name="name" :model-type="modelType" />
-        <button @click="deleteModelClicked" class="bg-red-200 mx-1 p-1 rounded-lg">
+        <button @click="(e) => deleteModelClicked(e)" class="bg-red-400 mx-1 p-1 rounded-lg hover:bg-red-500">
+          <font-awesome-icon icon="fa-regular fa-trash-can" />
           Remove
         </button>
       </div>
@@ -52,8 +52,9 @@ export default defineComponent({
     },
   },
   methods: {
-    deleteModelClicked() {
+    deleteModelClicked(e:any) {
       if (this.modelId != undefined) {
+        e.stopPropagation();
         this.$emit("deleteModel", this.modelId);
       }
     },
@@ -76,12 +77,10 @@ export default defineComponent({
       }
     },
     navigate(e: any) {
-      console.log(e);
-      console.log(e.bubbles);
-      // e.stopPropagation();
-      // console.log("navigating...");
-      // TODO: if buttons are clicked, ignore routing...
-      // this.$router.push(`${this.routeRoot}/${this.modelId}`);
+      if(this.isSong){ // no navigation from song component
+        return;
+      }
+      this.$router.push(`${this.routeRoot}/${this.modelId}`);
     }
   },
 });

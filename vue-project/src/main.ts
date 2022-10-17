@@ -12,6 +12,9 @@ import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App.vue";
 import router from "./router/routes";
@@ -28,8 +31,11 @@ library.add(faArrowRightToBracket);
 library.add(faUserPlus);
 library.add(faAnglesRight);
 library.add(faAnglesLeft);
-const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon);
+library.add(faTrashCan);
+library.add(faPen);
+library.add(faArrowUpRightFromSquare);
 
+const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());
 app.use(router);
 
