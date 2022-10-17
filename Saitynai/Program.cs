@@ -69,3 +69,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+// appsettings example:
+//{
+//    "Logging": {
+//        "LogLevel": {
+//            "Default": "Information",
+//            "Microsoft.AspNetCore": "Warning"
+//        }
+//    },
+//    "AllowedHosts": "*"
+//}

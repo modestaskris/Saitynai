@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saitynai.Helpers;
 
@@ -11,9 +12,10 @@ using Saitynai.Helpers;
 namespace Saitynai.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221017093155_mssql.azure_migration_966")]
+    partial class mssqlazure_migration_966
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,8 +131,8 @@ namespace Saitynai.Migrations
                         new
                         {
                             Username = "admin",
-                            PasswordHash = new byte[] { 29, 65, 222, 45, 93, 63, 128, 234, 247, 6, 197, 29, 125, 29, 163, 75, 117, 160, 162, 9, 235, 139, 56, 246, 193, 236, 162, 154, 14, 226, 195, 124, 23, 125, 83, 97, 226, 157, 139, 129, 10, 55, 117, 159, 229, 106, 92, 181, 144, 101, 96, 253, 27, 198, 196, 229, 204, 123, 64, 127, 207, 94, 79, 146 },
-                            PasswordSalt = new byte[] { 251, 58, 140, 229, 31, 6, 121, 249, 59, 156, 103, 47, 106, 253, 72, 31, 104, 240, 74, 101, 84, 218, 55, 220, 114, 212, 53, 24, 161, 94, 5, 44, 36, 129, 141, 239, 49, 249, 32, 158, 4, 98, 181, 252, 159, 173, 170, 154, 175, 88, 43, 97, 156, 51, 141, 26, 21, 48, 181, 214, 131, 61, 174, 124, 241, 113, 128, 81, 113, 41, 211, 233, 127, 217, 15, 180, 96, 161, 2, 168, 195, 197, 241, 178, 73, 243, 172, 189, 170, 237, 30, 45, 21, 129, 23, 70, 211, 196, 143, 93, 205, 101, 7, 210, 208, 115, 134, 153, 112, 189, 125, 11, 103, 178, 238, 107, 120, 90, 157, 33, 244, 84, 152, 233, 133, 222, 217, 186 },
+                            PasswordHash = new byte[] { 111, 9, 70, 174, 216, 54, 63, 151, 9, 78, 106, 136, 84, 119, 39, 103, 119, 141, 158, 32, 40, 88, 220, 17, 203, 141, 81, 231, 197, 179, 81, 213, 45, 30, 88, 181, 187, 56, 231, 74, 25, 104, 101, 247, 60, 198, 237, 115, 84, 28, 17, 83, 240, 161, 250, 189, 139, 243, 207, 12, 56, 189, 142, 120 },
+                            PasswordSalt = new byte[] { 152, 91, 24, 173, 68, 87, 113, 184, 95, 195, 227, 25, 95, 30, 106, 144, 209, 43, 214, 93, 9, 121, 82, 39, 167, 147, 3, 185, 6, 100, 231, 174, 101, 178, 72, 143, 7, 161, 99, 228, 185, 228, 150, 204, 248, 224, 32, 37, 166, 71, 141, 247, 20, 40, 83, 85, 180, 16, 119, 228, 89, 42, 34, 194, 62, 144, 93, 225, 180, 76, 89, 84, 88, 245, 210, 55, 63, 55, 202, 66, 134, 22, 168, 192, 160, 142, 247, 48, 249, 56, 166, 161, 143, 62, 42, 15, 67, 78, 44, 195, 195, 230, 148, 185, 203, 9, 68, 58, 36, 149, 183, 159, 26, 203, 130, 188, 209, 9, 246, 255, 110, 233, 75, 67, 173, 142, 137, 153 },
                             Role = 0,
                             UserId = -1
                         });
