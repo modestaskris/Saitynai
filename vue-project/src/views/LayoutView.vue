@@ -3,9 +3,9 @@
     <div v-if="['login', 'register'].includes($route.name)" class="pt-56">
     </div>
     <div class="relative flex min-h-screen">
-        <Menu v-if="!$route.meta.hideMenu" class="w-64" />
+        <Menu v-if="$route.meta.displayMenu" class="w-64" />
         <div class="basis-full flex-1">
-            <Navbar v-if="!$route.meta.hideNavBar" />
+            <Navbar v-if="$route.meta.displayNavBar" />
             <div>
                 <!-- content -->
                 <div class="p-6">
@@ -14,15 +14,17 @@
             </div>
         </div>
     </div>
+    <Footer v-if="$route.meta.displayFooter"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Menu from '../components/Menu.vue';
 import Navbar from '../components/Navbar.vue';
+import Footer from '../components/Footer.vue';
 
 
 export default defineComponent({
-    components: { Menu, Navbar }
+    components: { Menu, Navbar, Footer }
 })
 </script>
