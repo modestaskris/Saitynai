@@ -1,20 +1,20 @@
 * &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
 * &check; Sukurti naudotojo sąsajos sprendimą realizuotam REST API
-* &#x2610;Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
-* &#x2610; Images prisitaikymas (max-width taisyklė, kad paveikslėlis mažėtų neišlipdamas iš savo konteinerio elemento)
-* &#x2610;Header, Content, Footer srityse stilius turėtų būti skirtingas (specifiškas). Srityse turėtų būti bent po keletą skirtingų elementų. 
-* &#x2610;Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
-* &#x2610;Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
-* &#x2610;Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
-* &#x2610;Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
-* &#x2610;Panaudoti vektorines ikonas (webfont, svg).
-* &#x2610;Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
-* &#x2610;Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.
-* &#x2610;Parinkti tarpusavyje besiderinančias spalvas.
-* &#x2610;UI elementai negali išsimėtyti, išdėstymas turi paklusti tinklelio horizontalioms ir vertikalioms linijoms.
-* &#x2610;Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
-* &#x2610;Įvedimo formos turi būti aiškios ir nuoseklios.
-* &#x2610;Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
+* &#x2610; Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
+* &check; Images prisitaikymas (max-width taisyklė, kad paveikslėlis mažėtų neišlipdamas iš savo konteinerio elemento)
+* &#x2610; Header, Content, Footer srityse stilius turėtų būti skirtingas (specifiškas). Srityse turėtų būti bent po keletą skirtingų elementų. 
+* &#x2610; Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
+* &#x2610; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
+* &#x2610; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
+* &#x2610; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
+* &check; Panaudoti vektorines ikonas (webfont, svg).
+* &check; Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
+* &#x2610; Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.
+* &#x2610; Parinkti tarpusavyje besiderinančias spalvas.
+* &#x2610; UI elementai negali išsimėtyti, išdėstymas turi paklusti tinklelio horizontalioms ir vertikalioms linijoms.
+* &#x2610; Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
+* &#x2610; Įvedimo formos turi būti aiškios ir nuoseklios.
+* &#x2610; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
 - &#x2610; Projekto kodas turi būti laikomas Git saugykloje (github, bitbucket, gitlab ar kt.). Dokumentacija - projektui sukurtame wiki arba projekto kodo Git saugykloje (.readme).
 
 

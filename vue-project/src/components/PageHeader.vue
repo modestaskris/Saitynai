@@ -4,6 +4,12 @@
             {{this.label}}
         </div>
         <div>
+            maybe use grid here...
+        </div>
+        <div>
+            select list from - to (use different input methods)
+        </div>
+        <div>
             <slot/>
         </div>
     </div>
