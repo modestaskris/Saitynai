@@ -17,7 +17,7 @@
   </button>
 
   <!-- Main modal -->
-  <div :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
+  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
       overflow-y-auto overflow-x-hidden
       flex
       justifty-center
@@ -31,9 +31,9 @@
       h-modal
       md:h-full
     ">
-    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div class="relative p-4 w-full flex justify-center h-fit">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div @click="preventBubbles" class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-2/4">
         <button @click="onModalClick" type="button" class="
             absolute
             top-3
@@ -214,10 +214,13 @@ export default defineComponent({
     },
   },
   methods: {
+    triggerModal(){
+      this.displayModal = !this.displayModal;
+    },
     onModalClick(e: null|any) {
       e.stopPropagation();
       this.$emit("modalActivation", this.displayModal);
-      this.displayModal = !this.displayModal;
+      this.triggerModal();
     },
     async onUpdateModel() {
       if (this.isCategory) {
@@ -252,6 +255,14 @@ export default defineComponent({
     showError() {
       throw Error("Input data is empty...");
     },
+    preventBubbles(e:any) {
+      e.stopPropagation();
+    },
+    clickedBackground() {
+      if (!this.displayModal) {
+        this.triggerModal();
+      }
+    }
   },
 });
 </script>

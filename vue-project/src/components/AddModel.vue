@@ -30,7 +30,8 @@
       md:h-full
     " -->
   <!-- Main modal -->
-  <div :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
+  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1"
+    aria-hidden="true" class="
   overflow-y-auto overflow-x-hidden
       flex
       justifty-center
@@ -44,9 +45,9 @@
       h-modal
       md:h-full
     ">
-    <div class="relative p-1 w-full">
+    <div class="relative p-1 w-full flex justify-center h-fit">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div @click="preventBubbles" class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-2/4 ">
         <button @click="onModalClick" type="button" class="
             absolute
             top-3
@@ -262,6 +263,14 @@ export default defineComponent({
       this.newModelName = ""; // clears old category name
       this.newUrl = "";
     },
+    preventBubbles(e:any) {
+      e.stopPropagation();
+    },
+    clickedBackground() {
+      if (!this.displayModal) {
+        this.onModalClick();
+      }
+    }
   },
 });
 </script>

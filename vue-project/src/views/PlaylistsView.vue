@@ -11,11 +11,14 @@ import PageHeader from '@/components/PageHeader.vue';
       <AddModelVue v-if="playlistContainsInCategory" modelType="playlist" @create-button-pressed="createPlaylist" />
     </PageHeader>
     <!-- TODO: endpoint returns all playlists... -->
-    <ModelRow v-for="(playlist, index) in playlists" v-bind:key="playlist.playlistId" @deleteModel="deletePlaylist"
-      @editModel="editPlaylist" :modelId="playlist.playlistId" :name="playlist.title" 
-      :index="index"
-      :url="playlist.url"
-      :route-root="route.PLAYLISTS" model-type="playlist" />
+    <div v-if="playlists.length > 0">
+      <ModelRow v-for="(playlist, index) in playlists" v-bind:key="playlist.playlistId" @deleteModel="deletePlaylist"
+        @editModel="editPlaylist" :modelId="playlist.playlistId" :name="playlist.title" :index="index"
+        :url="playlist.url" :route-root="route.PLAYLISTS" model-type="playlist" />
+    </div>
+    <div v-else>
+      No playlist found...
+    </div>
   </div>
 </template>
 

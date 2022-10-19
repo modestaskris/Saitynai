@@ -8,12 +8,15 @@ import PageHeader from '../components/PageHeader.vue';
     <AddModel @createButtonPressed="addNewCategory" modelType="category" />
   </PageHeader>
   <div>
-    <div>
+    <div v-if="categories.length > 0">
       <ModelRow v-for="(playlist, index) in categories" v-bind:key="playlist.categoryId"
         @deleteModel="deleteCategoryFromCategories" @editModel="updateCategory" 
         :index="index"
         :modelId="playlist.categoryId"
         :name="playlist.name" :routeRoot="route.CATEGORIES" modelType="category" />
+    </div>
+    <div v-else>
+      No categories exists...
     </div>
   </div>
 </template>
