@@ -6,9 +6,9 @@
         <div>
             maybe use grid here...
         </div>
-        <div>
+        <!-- <div>
             select list from - to (use different input methods)
-        </div>
+        </div> -->
         <div>
             <slot/>
         </div>

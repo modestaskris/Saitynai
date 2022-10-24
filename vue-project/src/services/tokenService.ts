@@ -67,7 +67,7 @@ export const TokenService = {
 
   async updateToken(){
     const token = await this.fetchToken();
-    console.log(`New token: ${token}`);
+    // console.log(`New token: ${token}`);
     TokenService.saveToken(token);
   },
 

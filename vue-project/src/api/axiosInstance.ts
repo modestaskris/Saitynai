@@ -11,7 +11,7 @@ const getToken = () => {
   // TODO: token() throws exception;
   var token = TokenService.token();
   // var token = "";
-  console.log(`using token: ${token}`);
+  // console.log(`using token: ${token}`);
   return token;
 };
 

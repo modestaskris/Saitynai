@@ -206,7 +206,7 @@ export default defineComponent({
   props: {
     modelType: String,
   },
-  emits: ["createButtonPressed"],
+  emits: ["submitButtonPressed"],
   data() {
     return {
       displayModal: true as boolean,

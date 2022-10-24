@@ -17,7 +17,8 @@
   </button>
 
   <!-- Main modal -->
-  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1" aria-hidden="true" class="
+  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1"
+    aria-hidden="true" class="
       overflow-y-auto overflow-x-hidden
       flex
       justifty-center
@@ -214,11 +215,13 @@ export default defineComponent({
     },
   },
   methods: {
-    triggerModal(){
+    triggerModal() {
       this.displayModal = !this.displayModal;
     },
-    onModalClick(e: null|any) {
-      e.stopPropagation();
+    onModalClick(e: null | any) {
+      if (e !== undefined) {
+        e.stopPropagation();
+      }
       this.$emit("modalActivation", this.displayModal);
       this.triggerModal();
     },
@@ -255,7 +258,7 @@ export default defineComponent({
     showError() {
       throw Error("Input data is empty...");
     },
-    preventBubbles(e:any) {
+    preventBubbles(e: any) {
       e.stopPropagation();
     },
     clickedBackground() {

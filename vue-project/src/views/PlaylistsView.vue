@@ -2,23 +2,53 @@
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
 import route from "@/router/route";
-import PageHeader from '@/components/PageHeader.vue';
+import PageHeader from "@/components/PageHeader.vue";
+import ModalVue from "@/components/Modal.vue";
 </script>
 
 <template>
   <div>
     <PageHeader label="Playlists">
-      <AddModelVue v-if="playlistContainsInCategory" modelType="playlist" @create-button-pressed="createPlaylist" />
+      <!-- Filter  -->
+      <ModalVue modal-header="Filters" modal-open-button-name="Filters" :on-submit-button-pressed="filterPlaylists">
+        <div>
+          from
+          <input
+            type="date"
+            class="p-1 border-black border-2 rounded-xl"
+            :value="filters.dateFrom"
+          />
+        </div>
+        <div>
+          to
+          <input
+            type="datetime-local"
+            class="p-1 border-black border-2 rounded-xl"
+            v-model="filters.dateTo"
+          />
+        </div>
+      </ModalVue>
+      <AddModelVue
+        v-if="playlistContainsInCategory"
+        modelType="playlist"
+        @create-button-pressed="createPlaylist"
+      />
     </PageHeader>
-    <!-- TODO: endpoint returns all playlists... -->
     <div v-if="playlists.length > 0">
-      <ModelRow v-for="(playlist, index) in playlists" v-bind:key="playlist.playlistId" @deleteModel="deletePlaylist"
-        @editModel="editPlaylist" :modelId="playlist.playlistId" :name="playlist.title" :index="index"
-        :url="playlist.url" :route-root="route.PLAYLISTS" model-type="playlist" />
+      <ModelRow
+        v-for="(playlist, index) in playlists"
+        v-bind:key="playlist.playlistId"
+        @deleteModel="deletePlaylist"
+        @editModel="editPlaylist"
+        :modelId="playlist.playlistId"
+        :name="playlist.title"
+        :index="index"
+        :url="playlist.url"
+        :route-root="route.PLAYLISTS"
+        model-type="playlist"
+      />
     </div>
-    <div v-else>
-      No playlist found...
-    </div>
+    <div v-else>No playlist found...</div>
   </div>
 </template>
 
@@ -33,12 +63,19 @@ interface IPlaylist {
   playlistId: number;
   title: string;
   url: string;
+  categoryId: number;
+  created: Date;
 }
 
 export default defineComponent({
   data() {
     return {
       playlists: [] as Array<IPlaylist>,
+      filters: {
+        dateFrom: "2017-07-04",
+        dateTo: "2022-07-04",
+      },
+      filteredPlaylists: [] as Array<IPlaylist>,
       categoryId: parseInt(`${this.$route.params.categoryId}`),
     };
   },
@@ -46,14 +83,21 @@ export default defineComponent({
     playlistContainsInCategory() {
       const router = useRoute();
       return router.path !== route.PLAYLISTS;
-    }
+    },
+  },
+  watch: {
+    "filters.dateFrom"(newValue) {
+      console.log("filters.dateFrom");
+    },
+    "filters.dateTo"(newValue) {
+      console.log("filters.dateTo");
+    },
   },
   methods: {
     async getPlaylists() {
       const categ = this.categoryId;
       var resp: AxiosResponse; // TODO: maybe does not require to initialize...
       if (this.playlistContainsInCategory) {
-        // todo if false, 
         // fetches playlist of selected category
         console.log("fetching playlists by category");
         resp = await CategoryService.getPlaylists(categ);
@@ -62,9 +106,9 @@ export default defineComponent({
         console.log("fetching all playlists..");
         resp = await PlaylistService.getList();
       }
-      // await CategoryService.getPlaylists(categ);
       if (resp.status === 200) {
         this.playlists = resp.data;
+        console.log(this.playlists);
       } else {
         console.error("Error while fetching category playlists...");
       }
@@ -85,7 +129,6 @@ export default defineComponent({
     },
     async deletePlaylist(playlistId: Number) {
       const resp = await PlaylistService.delete(playlistId);
-      console.log(resp);
       // TODO: test
       if (resp.status == 204) {
         this.playlists = this.playlists.filter(
@@ -96,8 +139,13 @@ export default defineComponent({
       }
     },
     async editPlaylist(playlistId: Number, newName: string, newUrl: string) {
+      const playlist = this.playlists.find((x) => x.playlistId === playlistId);
+      if (!playlist) {
+        console.log("No playlist found on editing...");
+        return;
+      }
       const obj = {
-        categoryId: this.categoryId,
+        categoryId: playlist.categoryId,
         title: newName,
         url: newUrl,
       };
@@ -114,6 +162,9 @@ export default defineComponent({
           "Unhandled error code while updating playlist.." + resp.status
         );
       }
+    },
+    filterPlaylists() {
+
     },
   },
   mounted() {

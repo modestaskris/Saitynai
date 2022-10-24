@@ -33,6 +33,8 @@ interface ISong {
   songId: number;
   url: string;
   downloaded: boolean;
+  playlistId: number;
+  downloadedDate: Date;
 }
 
 export default defineComponent({
@@ -82,7 +84,6 @@ export default defineComponent({
     },
     async deleteSong(songId: Number) {
       const resp = await SongService.delete(songId);
-      console.log(resp);
       if (resp.status == 204) {
         this.songs = this.songs.filter(
           (x) => x.songId !== songId
@@ -93,8 +94,13 @@ export default defineComponent({
     },
     async editSong(modelId: Number, newName: string, newUrl: string) {
       // newName is empty, reusing components, that passes more than one param through emit....
+      var song = this.songs.find(x => x.songId === modelId);
+      if(!song){
+        console.error("Song with id not found");
+        return;
+      }
       const obj = {
-        playlistId: this.playlistId,
+        playlistId: song.playlistId,
         url: newUrl,
       };
       const resp = await SongService.update(modelId, obj);
