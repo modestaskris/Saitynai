@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.Internal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 using Saitynai.Classes;
 using Saitynai.DTO;
+using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
 
@@ -30,7 +33,7 @@ namespace Saitynai.Controllers
 
         // GET: api/Category
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
+        public async Task<ActionResult<IEnumerable<CategoryRespDto>>> GetCategory()
         {
             if (_context.Category == null)
             {
@@ -41,12 +44,14 @@ namespace Saitynai.Controllers
 
             var categories = user.Categories.ToList();
 
-            return Ok(categories);
+            var categResp = categories.Select(x => Mapper(x)).ToList();
+
+            return Ok(categResp);
         }
 
         // GET: api/Category/{id}
         [HttpGet("{id}/playlists")]
-        public async Task<ActionResult<IEnumerable<Playlist>>> GetCategoriePlaylists(int id)
+        public async Task<ActionResult<IEnumerable<PlaylistRespDto>>> GetCategoriePlaylists(int id)
         {
             if (_context.Category == null)
             {
@@ -61,11 +66,14 @@ namespace Saitynai.Controllers
                 return NotFound($"CategoryId {id} does not found");
             }
 
-            return category.Playlists;
+            var playlists = category.Playlists.ConvertAll(x => Mapper(x)).ToList();
+
+
+            return playlists;
         }
 
         [HttpGet("{id}/playlists/{playlistId}/songs")]
-        public async Task<ActionResult<IEnumerable<Song>>> GetCategoriePlaylistsSongs(int id, int playlistId)
+        public async Task<ActionResult<IEnumerable<SongRespDto>>> GetCategoriePlaylistsSongs(int id, int playlistId)
         {
             if (_context.Category == null)
             {
@@ -86,7 +94,9 @@ namespace Saitynai.Controllers
                 return BadRequest($"Playlist id not found");
             }
 
-            return playlist.Songs;
+            var songs = playlist.Songs.Select(x => Mapper(x)).ToList();
+
+            return songs;
         }
 
         // TODO do not use custom class, maybe there is possible to use models...
@@ -123,7 +133,7 @@ namespace Saitynai.Controllers
 
         // GET: api/Category/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategorie(int id)
+        public async Task<ActionResult<CategoryRespDto>> GetCategorie(int id)
         {
             if (_context.Category == null)
             {
@@ -138,7 +148,7 @@ namespace Saitynai.Controllers
                 return NotFound($"CategoryId {id} does not found");
             }
         
-            return category;
+            return Mapper(category);
         }
 
         // PUT: api/Category/{id}
@@ -180,7 +190,7 @@ namespace Saitynai.Controllers
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategorie(CategoryDTO request)
+        public async Task<ActionResult<CategoryRespDto>> PostCategorie(CategoryDTO request)
         {
             if (_context.Category == null)
             {
@@ -204,7 +214,7 @@ namespace Saitynai.Controllers
             await _context.SaveChangesAsync(); // TODO cia luzta..
 
 
-            return CreatedAtAction("GetCategory", new { id = newCategory.CategoryId }, newCategory);
+            return CreatedAtAction("GetCategory", new { id = newCategory.CategoryId }, Mapper(newCategory));
         }
 
         // DELETE: api/Categories/{id}
@@ -247,6 +257,48 @@ namespace Saitynai.Controllers
                 .ThenInclude(x=> x.Playlists) // todo not include 
                 .ThenInclude(x => x.Songs) // todo not include
                 .FirstOrDefault(x => x.Username.Equals(User));
+        }
+
+
+        private CategoryRespDto Mapper(Category categ)
+        {
+            return new CategoryRespDto()
+            {
+                CategoryId = categ.CategoryId,
+                Name = categ.Name,
+            };
+        }
+
+        private PlaylistRespDto Mapper(Playlist p)
+        {
+            var songs = new List<SongRespDto>();
+
+            foreach (var song in p.Songs)
+            {
+                // songs.Append(Mapper(song));
+            }
+
+            return new PlaylistRespDto()
+            {
+                CategoryId = p.Categorie.CategoryId,
+                // Songs = songs, 
+                Created = p.Created,
+                PlaylistId = p.PlaylistId,
+                Title = p.Title,
+                Url = p.Url
+            };
+        }
+
+        private SongRespDto Mapper(Song song)
+        {
+            return new SongRespDto()
+            {
+                SongId = song.SongId,
+                PlaylistId = song.Playlist.PlaylistId,
+                Downloaded = song.Downloaded,
+                DownloadedDate = song.DownloadedDate,
+                Url = song.Url
+            };
         }
     }
 }

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.CompilerServices;
 using Saitynai.DTO;
+using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
 
@@ -27,7 +29,7 @@ namespace Saitynai.Controllers
 
         // GET: api/Playlists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Playlist>>> GetPlaylists()
+        public async Task<ActionResult<IEnumerable<PlaylistRespDto>>> GetPlaylists()
         {
             if (_context.Playlists == null)
             {
@@ -43,13 +45,13 @@ namespace Saitynai.Controllers
                 BadRequest("Category does not exist");
             }
 
-            List<Playlist> playlists = new List<Playlist>();
+            List<PlaylistRespDto> playlists = new List<PlaylistRespDto>();
 
             foreach (var c in categories)
             {
                 foreach (var p in c.Playlists)
                 {
-                    playlists.Add(p);
+                    playlists.Add(Mapper(p));
                 }
             }
 
@@ -58,7 +60,7 @@ namespace Saitynai.Controllers
 
         // GET: api/Playlists/{id}
         [HttpGet("{id}")] // TODO probably bad request type
-        public async Task<ActionResult<Playlist>> GetPlaylist(int id)
+        public async Task<ActionResult<PlaylistRespDto>> GetPlaylist(int id)
         {
             if (_context.Playlists == null)
             {
@@ -72,12 +74,14 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            return playlist;
+            var mappedPlaylist = Mapper(playlist);
+
+            return mappedPlaylist;
         }
 
         // GET: api/Playlists/{id}
         [HttpGet("{id}/songs")] // TODO probably bad request type
-        public async Task<ActionResult<IEnumerable<Song>>> GetPlaylistSongs(int id)
+        public async Task<ActionResult<IEnumerable<SongRespDto>>> GetPlaylistSongs(int id)
         {
             if (_context.Playlists == null)
             {
@@ -91,13 +95,20 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            return playlist.Songs;
+            List<SongRespDto> songs = new List<SongRespDto>();
+
+            foreach (var s in playlist.Songs)
+            {
+                songs.Add(Mapper(s));
+            }
+
+            return songs;
         }
 
         // PUT: api/Playlists/{id}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Playlist>> PutPlaylist(int id, PlaylistDTO request)
+        public async Task<ActionResult<PlaylistRespDto>> PutPlaylist(int id, PlaylistDTO request)
         {
             // TODO playlist dto does not need to have categroyID
             // TODO check if request.categorie exists and if class props are valid
@@ -107,7 +118,7 @@ namespace Saitynai.Controllers
             {
                 BadRequest("Playlist url does not exists");
             }
-            
+
             playlist.Url = request.Url;
             playlist.Title = request.Title;
             _context.Entry(playlist).State = EntityState.Modified;
@@ -128,13 +139,15 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return Ok(playlist);
+            var p = Mapper(playlist);
+
+            return Ok(p);
         }
 
         // POST: api/Playlists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Playlist>> PostPlaylist(PlaylistDTO request)
+        public async Task<ActionResult<PlaylistRespDto>> PostPlaylist(PlaylistDTO request)
         {
             // TODO test middleware, url cannot be null...
             // TODO if user deletes playlist, also delete songs...
@@ -177,7 +190,9 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return CreatedAtAction("PostPlaylist", playlist);
+            var a = Mapper(playlist);
+
+            return CreatedAtAction("PostPlaylist", a);
         }
 
         // DELETE: api/Playlists/5
@@ -253,6 +268,36 @@ namespace Saitynai.Controllers
             }
 
             return playlist;
+        }
+
+        private PlaylistRespDto Mapper(Playlist p)
+        {
+            var songs = new List<SongRespDto>();
+
+            foreach (var song in p.Songs)
+            {
+                // songs.Append(Mapper(song));
+            }
+
+            return new PlaylistRespDto()
+            {
+                CategoryId = p.Categorie.CategoryId, 
+                // Songs = songs, 
+                Created = p.Created, PlaylistId = p.PlaylistId,
+                Title = p.Title, Url = p.Url
+            };
+        }
+
+        private SongRespDto Mapper(Song song)
+        {
+            return new SongRespDto()
+            {
+                SongId = song.SongId,
+                PlaylistId = song.Playlist.PlaylistId,
+                Downloaded = song.Downloaded,
+                DownloadedDate = song.DownloadedDate,
+                Url = song.Url
+            };
         }
     }
 }

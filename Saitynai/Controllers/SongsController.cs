@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Saitynai.DTO;
+using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
 
@@ -26,15 +27,25 @@ namespace Saitynai.Controllers
 
         // GET: api/Songs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
+        public async Task<ActionResult<IEnumerable<SongRespDto>>> GetSongs()
         {
-            var songs = GetUserSongs();
+            var playlists = GetUserPlaylists();
+            var songs = new List<SongRespDto>();
+
+            foreach (var p in playlists)
+            {
+                foreach (var song in p.Songs)
+                {
+                    songs.Add(Mapper(song));
+                }
+            }
+
             return songs;
         }
 
         // GET: api/Songs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Song>> GetSong(int id)
+        public async Task<ActionResult<SongRespDto>> GetSong(int id)
         {
             var song = GetUserSongs().Find(x => x.SongId == id);
 
@@ -43,13 +54,15 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            return song;
+            var mappedSong = Mapper(song);
+
+            return mappedSong;
         }
 
         // PUT: api/Songs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Song>> PutSong(int id, SongDTO request)
+        public async Task<ActionResult<SongRespDto>> PutSong(int id, SongDTO request)
         {
             var playlist = GetUserPlaylists().FirstOrDefault(x => x.PlaylistId == request.PlaylistId);
             if (playlist == null)
@@ -79,7 +92,9 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return Ok(song);
+            var mappedSong = Mapper(song);
+
+            return Ok(mappedSong);
         }
 
         // POST: api/Songs
@@ -114,7 +129,9 @@ namespace Saitynai.Controllers
                 }
             }
 
-            return CreatedAtAction("GetSong", new { id = song.Url }, song);
+            var a = Mapper(song);
+
+            return CreatedAtAction("GetSong", new { id = a.Url }, a);
         }
 
         // DELETE: api/Songs/5
@@ -220,6 +237,38 @@ namespace Saitynai.Controllers
             }
 
             return song;
+        }
+
+        private PlaylistRespDto Mapper(Playlist p)
+        {
+            var songs = new List<SongRespDto>();
+
+            foreach (var song in p.Songs)
+            {
+                songs.Append(Mapper(song));
+            }
+
+            return new PlaylistRespDto()
+            {
+                CategoryId = p.Categorie.CategoryId,
+                // Songs = songs,
+                Created = p.Created,
+                PlaylistId = p.PlaylistId,
+                Title = p.Title,
+                Url = p.Url
+            };
+        }
+
+        private SongRespDto Mapper(Song song)
+        {
+            return new SongRespDto()
+            {
+                SongId = song.SongId,
+                PlaylistId = song.Playlist.PlaylistId,
+                Downloaded = song.Downloaded,
+                DownloadedDate = song.DownloadedDate,
+                Url = song.Url
+            };
         }
     }
 }

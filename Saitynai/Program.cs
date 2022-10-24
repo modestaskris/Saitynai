@@ -70,3 +70,4 @@ app.Run();
 // TODO refactor model classes(remove JsonIgnore fields)
 // TODO add automapper https://automapper.org/
 // TODO naudoti automapper nugete yra, kaip DP naudot gal? AutoMapper, extension microsoft dependency injection
+// good practices: https://www.youtube.com/watch?v=jmHKWdMzihY
