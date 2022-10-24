@@ -32,7 +32,7 @@
   <ItemGroup>
     <Folder Include="DTO\Response\" />
     <Folder Include="DTO\Request\" />
-    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

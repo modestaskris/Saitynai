@@ -14,6 +14,7 @@ using Saitynai.DTO;
 using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
+using Saitynai.Services;
 
 namespace Saitynai.Controllers
 {
@@ -25,10 +26,12 @@ namespace Saitynai.Controllers
     public class CategoryController : BaseController
     {
         private readonly DataContext _context;
+        private readonly ICustomMapper _customMapper;
 
-        public CategoryController(DataContext context)
+        public CategoryController(DataContext context, ICustomMapper customMapper)
         {
             _context = context;
+            _customMapper = customMapper;
         }
 
         // GET: api/Category
@@ -44,7 +47,7 @@ namespace Saitynai.Controllers
 
             var categories = user.Categories.ToList();
 
-            var categResp = categories.Select(x => Mapper(x)).ToList();
+            var categResp = categories.Select(x => _customMapper.Mapper(x)).ToList();
 
             return Ok(categResp);
         }
@@ -66,7 +69,7 @@ namespace Saitynai.Controllers
                 return NotFound($"CategoryId {id} does not found");
             }
 
-            var playlists = category.Playlists.ConvertAll(x => Mapper(x)).ToList();
+            var playlists = category.Playlists.ConvertAll(x => _customMapper.Mapper(x)).ToList();
 
 
             return playlists;
@@ -94,7 +97,7 @@ namespace Saitynai.Controllers
                 return BadRequest($"Playlist id not found");
             }
 
-            var songs = playlist.Songs.Select(x => Mapper(x)).ToList();
+            var songs = playlist.Songs.Select(x => _customMapper.Mapper(x)).ToList();
 
             return songs;
         }
@@ -148,7 +151,7 @@ namespace Saitynai.Controllers
                 return NotFound($"CategoryId {id} does not found");
             }
         
-            return Mapper(category);
+            return _customMapper.Mapper(category);
         }
 
         // PUT: api/Category/{id}
@@ -214,7 +217,7 @@ namespace Saitynai.Controllers
             await _context.SaveChangesAsync(); // TODO cia luzta..
 
 
-            return CreatedAtAction("GetCategory", new { id = newCategory.CategoryId }, Mapper(newCategory));
+            return CreatedAtAction("GetCategory", new { id = newCategory.CategoryId }, _customMapper.Mapper(newCategory));
         }
 
         // DELETE: api/Categories/{id}
@@ -257,48 +260,6 @@ namespace Saitynai.Controllers
                 .ThenInclude(x=> x.Playlists) // todo not include 
                 .ThenInclude(x => x.Songs) // todo not include
                 .FirstOrDefault(x => x.Username.Equals(User));
-        }
-
-
-        private CategoryRespDto Mapper(Category categ)
-        {
-            return new CategoryRespDto()
-            {
-                CategoryId = categ.CategoryId,
-                Name = categ.Name,
-            };
-        }
-
-        private PlaylistRespDto Mapper(Playlist p)
-        {
-            var songs = new List<SongRespDto>();
-
-            foreach (var song in p.Songs)
-            {
-                // songs.Append(Mapper(song));
-            }
-
-            return new PlaylistRespDto()
-            {
-                CategoryId = p.Categorie.CategoryId,
-                // Songs = songs, 
-                Created = p.Created,
-                PlaylistId = p.PlaylistId,
-                Title = p.Title,
-                Url = p.Url
-            };
-        }
-
-        private SongRespDto Mapper(Song song)
-        {
-            return new SongRespDto()
-            {
-                SongId = song.SongId,
-                PlaylistId = song.Playlist.PlaylistId,
-                Downloaded = song.Downloaded,
-                DownloadedDate = song.DownloadedDate,
-                Url = song.Url
-            };
         }
     }
 }

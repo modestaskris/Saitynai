@@ -10,6 +10,7 @@ using Saitynai.DTO;
 using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
+using Saitynai.Services;
 
 namespace Saitynai.Controllers
 {
@@ -19,10 +20,11 @@ namespace Saitynai.Controllers
     public class SongsController : BaseController
     {
         private readonly DataContext _context;
-
-        public SongsController(DataContext context)
+        private readonly ICustomMapper _customMapper;
+        public SongsController(DataContext context, ICustomMapper customMapper)
         {
             _context = context;
+            _customMapper = customMapper;
         }
 
         // GET: api/Songs
@@ -36,7 +38,7 @@ namespace Saitynai.Controllers
             {
                 foreach (var song in p.Songs)
                 {
-                    songs.Add(Mapper(song));
+                    songs.Add(_customMapper.Mapper(song));
                 }
             }
 
@@ -54,7 +56,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var mappedSong = Mapper(song);
+            var mappedSong = _customMapper.Mapper(song);
 
             return mappedSong;
         }
@@ -92,7 +94,7 @@ namespace Saitynai.Controllers
                 }
             }
 
-            var mappedSong = Mapper(song);
+            var mappedSong = _customMapper.Mapper(song);
 
             return Ok(mappedSong);
         }
@@ -129,7 +131,7 @@ namespace Saitynai.Controllers
                 }
             }
 
-            var a = Mapper(song);
+            var a = _customMapper.Mapper(song);
 
             return CreatedAtAction("GetSong", new { id = a.Url }, a);
         }
@@ -237,38 +239,6 @@ namespace Saitynai.Controllers
             }
 
             return song;
-        }
-
-        private PlaylistRespDto Mapper(Playlist p)
-        {
-            var songs = new List<SongRespDto>();
-
-            foreach (var song in p.Songs)
-            {
-                songs.Append(Mapper(song));
-            }
-
-            return new PlaylistRespDto()
-            {
-                CategoryId = p.Categorie.CategoryId,
-                // Songs = songs,
-                Created = p.Created,
-                PlaylistId = p.PlaylistId,
-                Title = p.Title,
-                Url = p.Url
-            };
-        }
-
-        private SongRespDto Mapper(Song song)
-        {
-            return new SongRespDto()
-            {
-                SongId = song.SongId,
-                PlaylistId = song.Playlist.PlaylistId,
-                Downloaded = song.Downloaded,
-                DownloadedDate = song.DownloadedDate,
-                Url = song.Url
-            };
         }
     }
 }
