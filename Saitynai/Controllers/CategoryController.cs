@@ -14,6 +14,7 @@ using Saitynai.DTO;
 using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
+using Saitynai.Repositories;
 using Saitynai.Services;
 
 namespace Saitynai.Controllers
@@ -27,11 +28,13 @@ namespace Saitynai.Controllers
     {
         private readonly DataContext _context;
         private readonly ICustomMapper _customMapper;
+        private readonly IUserRepository _userRepository;
 
-        public CategoryController(DataContext context, ICustomMapper customMapper)
+        public CategoryController(DataContext context, ICustomMapper customMapper, IUserRepository userRepository)
         {
             _context = context;
             _customMapper = customMapper;
+            _userRepository = userRepository;
         }
 
         // GET: api/Category
@@ -43,10 +46,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var user = GetCurrentUser();
-
-            var categories = user.Categories.ToList();
-
+            var categories = _userRepository.GetUserCategories().ToList();
             var categResp = categories.Select(x => _customMapper.Mapper(x)).ToList();
 
             return Ok(categResp);
@@ -61,7 +61,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
 
             if (category == null)
@@ -83,7 +83,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
 
             if (category == null)
@@ -111,7 +111,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
 
             if (category == null)
@@ -143,7 +143,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
         
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.FirstOrDefault(x => x.CategoryId == id);
         
             if (category == null)
@@ -159,7 +159,7 @@ namespace Saitynai.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, CategoryDTO request) // id current name, 
         {
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.Find(x => x.CategoryId == id);
 
             if (category == null)
@@ -202,7 +202,7 @@ namespace Saitynai.Controllers
 
             // TODO allow create only unique name categorie...
 
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
 
             // TODO use category id, not name....
             Category newCategory = new Category()
@@ -230,7 +230,7 @@ namespace Saitynai.Controllers
                 return NotFound();
             }
 
-            var user = GetCurrentUser();
+            var user = _userRepository.GetUser();
             var category = user.Categories.Find(x => x.CategoryId == id);
 
             if (category == null)
@@ -247,19 +247,6 @@ namespace Saitynai.Controllers
         private bool CategorieExists(int id)
         {
             return (_context.Category?.Any(e => e.CategoryId == id)).GetValueOrDefault();
-        }
-
-        private User GetCurrentUser()
-        {
-            if (_context.Users == null)
-            {
-                throw new Exception("_context.Users is null");
-            }
-            return _context.Users
-                .Include(x => x.Categories)
-                .ThenInclude(x=> x.Playlists) // todo not include 
-                .ThenInclude(x => x.Songs) // todo not include
-                .FirstOrDefault(x => x.Username.Equals(User));
         }
     }
 }

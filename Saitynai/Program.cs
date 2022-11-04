@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Saitynai.Helpers;
+using Saitynai.Repositories;
 using Saitynai.Services;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -40,6 +41,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddSingleton<ICustomMapper, CustomMapper>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+// builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

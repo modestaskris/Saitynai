@@ -10,22 +10,28 @@ import ModalVue from "@/components/Modal.vue";
   <div>
     <PageHeader label="Playlists">
       <!-- Filter  -->
-      <ModalVue modal-header="Filters" modal-open-button-name="Filters" :on-submit-button-pressed="filterPlaylists">
-        <div>
-          from
-          <input
-            type="date"
-            class="p-1 border-black border-2 rounded-xl"
-            :value="filters.dateFrom"
-          />
-        </div>
-        <div>
-          to
-          <input
-            type="datetime-local"
-            class="p-1 border-black border-2 rounded-xl"
-            v-model="filters.dateTo"
-          />
+      <ModalVue
+        modal-header="Filters"
+        modal-open-button-name="Filters"
+        :on-submit-button-pressed="filterPlaylists"
+      >
+        <div class="text-white">
+          <div>
+            From
+            <input
+              type="date"
+              class="p-1 border-black border-2 rounded-xl text-black"
+              :value="filters.dateFrom"
+            />
+          </div>
+          <div>
+            To
+            <input
+              type="datetime-local"
+              class="p-1 border-black border-2 rounded-xl text-black"
+              v-model="filters.dateTo"
+            />
+          </div>
         </div>
       </ModalVue>
       <AddModelVue
@@ -34,9 +40,9 @@ import ModalVue from "@/components/Modal.vue";
         @create-button-pressed="createPlaylist"
       />
     </PageHeader>
-    <div v-if="playlists.length > 0">
+    <div v-if="filteredPlaylists.length > 0">
       <ModelRow
-        v-for="(playlist, index) in playlists"
+        v-for="(playlist, index) in filteredPlaylists"
         v-bind:key="playlist.playlistId"
         @deleteModel="deletePlaylist"
         @editModel="editPlaylist"
@@ -58,6 +64,8 @@ import { CategoryService } from "@/services/categoryService";
 import { PlaylistService } from "@/services/playlistService";
 import type { AxiosResponse } from "axios";
 import { useRoute } from "vue-router";
+import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
+import { filteredDates } from "@/helpers/DateFilters";
 
 interface IPlaylist {
   playlistId: number;
@@ -87,10 +95,10 @@ export default defineComponent({
   },
   watch: {
     "filters.dateFrom"(newValue) {
-      console.log("filters.dateFrom");
+      this.filterPlaylists();
     },
     "filters.dateTo"(newValue) {
-      console.log("filters.dateTo");
+      this.filterPlaylists();
     },
   },
   methods: {
@@ -108,6 +116,7 @@ export default defineComponent({
       }
       if (resp.status === 200) {
         this.playlists = resp.data;
+        this.filteredPlaylists = this.playlists;
         console.log(this.playlists);
       } else {
         console.error("Error while fetching category playlists...");
@@ -164,7 +173,9 @@ export default defineComponent({
       }
     },
     filterPlaylists() {
+      const validDates = filteredDates()
 
+      this.filteredPlaylists = [];
     },
   },
   mounted() {
