@@ -5,16 +5,16 @@
 * &#x2610; Header, Content, Footer srityse stilius turėtų būti skirtingas (specifiškas). Srityse turėtų būti bent po keletą skirtingų elementų. 
 * &check; Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
 * &#x2610; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
-* &#x2610; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
+* &check; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
 * &#x2610; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
 * &check; Panaudoti vektorines ikonas (webfont, svg).
 * &check; Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
 * &check; Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.
 * &check; Parinkti tarpusavyje besiderinančias spalvas.
 * &#x2610; UI elementai negali išsimėtyti, išdėstymas turi paklusti tinklelio horizontalioms ir vertikalioms linijoms.
-* &#x2610; Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
-* &#x2610; Įvedimo formos turi būti aiškios ir nuoseklios.
-* &#x2610; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
+* &check; Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
+* &check; Įvedimo formos turi būti aiškios ir nuoseklios.
+* &check; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
 - &#x2610; Projekto kodas turi būti laikomas Git saugykloje (github, bitbucket, gitlab ar kt.). Dokumentacija - projektui sukurtame wiki arba projekto kodo Git saugykloje (.readme).
 
 

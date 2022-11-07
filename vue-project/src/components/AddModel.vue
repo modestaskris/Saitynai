@@ -30,7 +30,7 @@
       md:h-full
     " -->
   <!-- Main modal -->
-  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1"
+  <div @click="clickedBackground" :class="{ hidden: displayModal, shake: !displayModal }" id="authentication-modal" tabindex="-1"
     aria-hidden="true" class="
   overflow-y-auto overflow-x-hidden
       flex
@@ -201,6 +201,7 @@
 import type { ICategory } from "@/models/category/category";
 import { CategoryService } from "@/services/categoryService";
 import { defineComponent } from "@vue/runtime-core";
+import '../styles/transitions.css'
 
 export default defineComponent({
   props: {

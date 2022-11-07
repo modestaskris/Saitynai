@@ -2,25 +2,39 @@
 import AddModelVue from "@/components/AddModel.vue";
 import ModelRow from "@/components/ModelRow.vue";
 import route from "@/router/route";
-import PageHeader from '@/components/PageHeader.vue';
+import PageHeader from "@/components/PageHeader.vue";
+import '../styles/transitions.css';
 </script>
-    
+
 <template>
   <div>
     <PageHeader label="Songs">
-      <AddModelVue v-if="!songContainsToPlaylist" modelType="song" @create-button-pressed="createSong" />
+      <AddModelVue
+        v-if="!songContainsToPlaylist"
+        modelType="song"
+        @create-button-pressed="createSong"
+      />
     </PageHeader>
     <div v-if="songs.length > 0">
-      <ModelRow v-for="(song, index) in songs" v-bind:key="song.songId" @deleteModel="deleteSong" @editModel="editSong"
-        :index="index" :modelId="song.songId" :name="song.songId + `song`" :url="song.url" :route-root="route.PLAYLISTS"
-        model-type="song" />
+      <TransitionGroup name="songList" tag="div">
+        <ModelRow
+          v-for="(song, index) in songs"
+          v-bind:key="song.songId"
+          @deleteModel="deleteSong"
+          @editModel="editSong"
+          :index="index"
+          :modelId="song.songId"
+          :name="song.songId + `song`"
+          :url="song.url"
+          :route-root="route.PLAYLISTS"
+          model-type="song"
+        />
+      </TransitionGroup>
     </div>
-    <div v-else>
-      Songs does not exists...
-    </div>
+    <div v-else>Songs does not exists...</div>
   </div>
 </template>
-    
+
 <script lang="ts">
 import { defineComponent } from "vue";
 import { SongService } from "@/services/songService";
@@ -50,7 +64,7 @@ export default defineComponent({
     // /songs maybe will not have playlist id, so cannot update or delete... CRITICAL
     songContainsToPlaylist(): boolean {
       return router.currentRoute.value.path == route.SONGS;
-    }
+    },
   },
   methods: {
     async getSongs() {
@@ -85,17 +99,15 @@ export default defineComponent({
     async deleteSong(songId: Number) {
       const resp = await SongService.delete(songId);
       if (resp.status == 204) {
-        this.songs = this.songs.filter(
-          (x) => x.songId !== songId
-        );
+        this.songs = this.songs.filter((x) => x.songId !== songId);
       } else {
         throw Error("Error while delete playlist... errorcode:" + resp.status);
       }
     },
     async editSong(modelId: Number, newName: string, newUrl: string) {
       // newName is empty, reusing components, that passes more than one param through emit....
-      var song = this.songs.find(x => x.songId === modelId);
-      if(!song){
+      var song = this.songs.find((x) => x.songId === modelId);
+      if (!song) {
         console.error("Song with id not found");
         return;
       }
