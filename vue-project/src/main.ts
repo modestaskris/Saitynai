@@ -15,6 +15,7 @@ import { faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import App from "./App.vue";
 import router from "./router/routes";
@@ -34,6 +35,7 @@ library.add(faAnglesLeft);
 library.add(faTrashCan);
 library.add(faPen);
 library.add(faArrowUpRightFromSquare);
+library.add(faBars);
 
 const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());

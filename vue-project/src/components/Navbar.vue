@@ -9,7 +9,7 @@ import { AuthService } from '../services/authService';
     <div>
         <div class="m-4 rounded-lg p-4 bg-gray-800 text-white font-semibold">
             <div class="justify-between flex">
-                <div>
+                <div class="flex justify-center">
                     Saitynai
                 </div>
                 <div>

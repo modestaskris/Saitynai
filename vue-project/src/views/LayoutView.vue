@@ -2,8 +2,9 @@
     <!-- make centered -->
     <div v-if="['login', 'register'].includes($route.name)" class="pt-56">
     </div>
-    <div class="relative flex min-h-screen">
-        <Menu v-if="$route.meta.displayMenu" class="w-64" />
+    <!-- <div class="relative flex min-h-screen"> -->
+    <div class="flex min-h-screen">
+        <Menu v-if="$route.meta.displayMenu" />
         <div class="basis-full flex-1">
             <Navbar v-if="$route.meta.displayNavBar" />
             <div>
