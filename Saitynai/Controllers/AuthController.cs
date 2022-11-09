@@ -96,22 +96,22 @@ namespace Saitynai.Controllers
             
             return Ok(token);
         }
-
-        [HttpGet("helloWorld")]
-        //public async Task<IActionResult<>> hello()
-        public async Task<ActionResult<IEnumerable<User>>> hello()
-        {
-            var users = _dataContext.Users.ToList();
-            return Ok(users);
-        }
-
-
-        [HttpGet("helloWorld2")]
-        //public async Task<IActionResult<>> hello()
-        public async Task<IActionResult> hello2()
-        {
-            return Ok("test");
-        }
+        //
+        // [HttpGet("helloWorld")]
+        // //public async Task<IActionResult<>> hello()
+        // public async Task<ActionResult<IEnumerable<User>>> hello()
+        // {
+        //     var users = _dataContext.Users.ToList();
+        //     return Ok(users);
+        // }
+        //
+        //
+        // [HttpGet("helloWorld2")]
+        // //public async Task<IActionResult<>> hello()
+        // public async Task<IActionResult> hello2()
+        // {
+        //     return Ok("test");
+        // }
 
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

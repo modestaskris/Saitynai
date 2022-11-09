@@ -6,7 +6,7 @@
 * &check; Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
 * &#x2610; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
 * &check; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
-* &check; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
+* &#x2610; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
 * &check; Panaudoti vektorines ikonas (webfont, svg).
 * &check; Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
 * &check; Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.

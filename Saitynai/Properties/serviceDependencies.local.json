@@ -3,6 +3,15 @@
     "apis1": {
       "ignored": "True",
       "type": "apis"
+    },
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/saitynaidbserver/databases/Saitynai_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:YPSApiDatabase"
     }
   }
 }
