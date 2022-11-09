@@ -1,7 +1,9 @@
 <template>
     <!-- <div :class="`md:absolute ` + menuStyle"> -->
     <!-- <div class="flex sm:absolute"> -->
-    <div class="flex md:absolute">
+    <!-- <div class="flex md:absolute sm:absolute lg:relative"> -->
+    <!-- <div class="flex "> -->
+    <div class="flex absolute md:relative ">
         <div :class="menuStyle">
             <div class="flex justify-center w-36">
                 <div>
