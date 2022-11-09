@@ -10,30 +10,32 @@ import ModalVue from "@/components/Modal.vue";
   <div>
     <PageHeader label="Playlists">
       <!-- Filter  -->
-      <ModalVue
-        modal-header="Filters"
-        modal-open-button-name="Filters"
-        :on-submit-button-pressed="filterPlaylists"
-      >
-        <div class="text-white">
-          <div>
-            From
-            <input
-              type="date"
-              class="p-1 border-black border-2 rounded-xl text-black"
-              :value="filters.dateFrom"
-            />
+      <template v-slot:center>
+        <ModalVue
+          modal-header="Filters"
+          modal-open-button-name="Filters"
+          :on-submit-button-pressed="filterPlaylists"
+        >
+          <div class="text-white">
+            <div>
+              From
+              <input
+                type="date"
+                class="p-1 border-black border-2 rounded-xl text-black"
+                :value="filters.dateFrom"
+              />
+            </div>
+            <div>
+              To
+              <input
+                type="datetime-local"
+                class="p-1 border-black border-2 rounded-xl text-black"
+                v-model="filters.dateTo"
+              />
+            </div>
           </div>
-          <div>
-            To
-            <input
-              type="datetime-local"
-              class="p-1 border-black border-2 rounded-xl text-black"
-              v-model="filters.dateTo"
-            />
-          </div>
-        </div>
-      </ModalVue>
+        </ModalVue>
+      </template>
       <AddModelVue
         v-if="playlistContainsInCategory"
         modelType="playlist"
@@ -173,7 +175,7 @@ export default defineComponent({
       }
     },
     filterPlaylists() {
-      const validDates = filteredDates()
+      const validDates = filteredDates();
 
       this.filteredPlaylists = [];
     },

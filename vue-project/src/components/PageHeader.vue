@@ -7,12 +7,12 @@
                 {{ this.label }}
             </div>
             <div>
-                maybe use grid here...
+                <slot name="center"></slot>
             </div>
             <!-- <div>
             select list from - to (use different input methods)
         </div> -->
-            <div>
+            <div class="justify-end flex">
                 <slot />
             </div>
         </div>
