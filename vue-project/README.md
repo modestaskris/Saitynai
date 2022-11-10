@@ -1,17 +1,17 @@
 * &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
 * &check; Sukurti naudotojo sąsajos sprendimą realizuotam REST API
-* &#x2610; Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
+* &check; Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
 * &check; Images prisitaikymas (max-width taisyklė, kad paveikslėlis mažėtų neišlipdamas iš savo konteinerio elemento)
-* &#x2610; Header, Content, Footer srityse stilius turėtų būti skirtingas (specifiškas). Srityse turėtų būti bent po keletą skirtingų elementų. 
+* &check; Header, Content, Footer srityse stilius turėtų būti skirtingas (specifiškas). Srityse turėtų būti bent po keletą skirtingų elementų. 
 * &check; Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
-* &#x2610; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
+* &check; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
 * &check; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
 * &#x2610; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
 * &check; Panaudoti vektorines ikonas (webfont, svg).
 * &check; Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
 * &check; Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.
 * &check; Parinkti tarpusavyje besiderinančias spalvas.
-* &#x2610; UI elementai negali išsimėtyti, išdėstymas turi paklusti tinklelio horizontalioms ir vertikalioms linijoms.
+* &check; UI elementai negali išsimėtyti, išdėstymas turi paklusti tinklelio horizontalioms ir vertikalioms linijoms.
 * &check; Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
 * &check; Įvedimo formos turi būti aiškios ir nuoseklios.
 * &check; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį

@@ -6,7 +6,7 @@
             <div class="text-2xl font-semibold">
                 {{ this.label }}
             </div>
-            <div>
+            <div class="flex justify-center">
                 <slot name="center"></slot>
             </div>
             <!-- <div>

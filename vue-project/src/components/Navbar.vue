@@ -9,8 +9,10 @@ import { AuthService } from '../services/authService';
     <div>
         <div class="m-4 rounded-lg p-4 bg-gray-800 text-white font-semibold">
             <div class="justify-between flex">
-                <div class="flex justify-center">
+                <!-- <div class="flex justify-center">
                     Saitynai
+                </div> -->
+                <div>
                 </div>
                 <div>
                     <RouterLink to='/register' class="mx-2 hover:bg-gray-600 rounded-xl p-1 py-2">

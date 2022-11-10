@@ -14,25 +14,21 @@ import ModalVue from "@/components/Modal.vue";
         <ModalVue
           modal-header="Filters"
           modal-open-button-name="Filters"
-          :on-submit-button-pressed="filterPlaylists"
+          :submitButtonPressed="filterPlaylists"
         >
-          <div class="text-white">
-            <div>
-              From
-              <input
-                type="date"
-                class="p-1 border-black border-2 rounded-xl text-black"
-                :value="filters.dateFrom"
-              />
-            </div>
-            <div>
-              To
-              <input
-                type="datetime-local"
-                class="p-1 border-black border-2 rounded-xl text-black"
-                v-model="filters.dateTo"
-              />
-            </div>
+          <div class="text-white grid grid-cols-2">
+            <div class="">From</div>
+            <input
+              type="datetime-local"
+              class="p-1 border-black border-2 rounded-xl text-black"
+              v-model="dateFrom"
+            />
+            <div>To</div>
+            <input
+              type="datetime-local"
+              class="p-1 border-black border-2 rounded-xl text-black"
+              v-model="dateTo"
+            />
           </div>
         </ModalVue>
       </template>
@@ -66,8 +62,6 @@ import { CategoryService } from "@/services/categoryService";
 import { PlaylistService } from "@/services/playlistService";
 import type { AxiosResponse } from "axios";
 import { useRoute } from "vue-router";
-import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
-import { filteredDates } from "@/helpers/DateFilters";
 
 interface IPlaylist {
   playlistId: number;
@@ -81,10 +75,8 @@ export default defineComponent({
   data() {
     return {
       playlists: [] as Array<IPlaylist>,
-      filters: {
-        dateFrom: "2017-07-04",
-        dateTo: "2022-07-04",
-      },
+      dateFrom: "2022-07-03",
+      dateTo: "2022-07-04",
       filteredPlaylists: [] as Array<IPlaylist>,
       categoryId: parseInt(`${this.$route.params.categoryId}`),
     };
@@ -93,14 +85,6 @@ export default defineComponent({
     playlistContainsInCategory() {
       const router = useRoute();
       return router.path !== route.PLAYLISTS;
-    },
-  },
-  watch: {
-    "filters.dateFrom"(newValue) {
-      this.filterPlaylists();
-    },
-    "filters.dateTo"(newValue) {
-      this.filterPlaylists();
     },
   },
   methods: {
@@ -175,12 +159,38 @@ export default defineComponent({
       }
     },
     filterPlaylists() {
-      const validDates = filteredDates();
-
-      this.filteredPlaylists = [];
+      const newDateFrom = new Date(this.dateFrom);
+      const newDateTo = new Date(this.dateTo);
+      const aa: Array<IPlaylist> = this.playlists.filter((x) => {
+        console.log(new Date(x.created).getTime());
+        if (
+          newDateFrom.getTime() <= new Date(x.created).getTime() &&
+          newDateTo.getTime() >= new Date(x.created).getTime()
+        ) {
+          return x;
+        }
+      });
+      this.filteredPlaylists = aa;
+    },
+    setInitialDates() {
+      const today = new Date();
+      this.dateTo = today.toISOString().slice(0, 16);
+      const monthAgo = today;
+      monthAgo.setMonth(today.getMonth() - 1);
+      const dateMonthAgo = monthAgo; // month ago
+      this.dateFrom = dateMonthAgo.toISOString().slice(0, 16);
+    },
+  },
+  watch: {
+    "dateFrom"(newValue) {
+      this.filterPlaylists();
+    },
+    "dateTo"(newValue) {
+      this.filterPlaylists();
     },
   },
   mounted() {
+    this.setInitialDates();
     this.getPlaylists();
   },
 });
