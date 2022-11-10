@@ -1,4 +1,6 @@
-* &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
+# Project requirements
+<!-- * &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai) -->
+* &#x2610; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
 * &check; Sukurti naudotojo sąsajos sprendimą realizuotam REST API
 * &check; Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
 * &check; Images prisitaikymas (max-width taisyklė, kad paveikslėlis mažėtų neišlipdamas iš savo konteinerio elemento)
@@ -6,7 +8,7 @@
 * &check; Analogiški elementai skirtingose srityse turėtų įgauti skirtingą išvaizdą.
 * &check; Realizuoti informacijos įvedimo sąsają, bent su keletu skirtingų tipų input elementų.
 * &check; Panaudoti transitions arba animacijas, pagyvinančius naudotojo sąsają (UI)
-* &#x2610; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
+* &check; Padarytas responsive meniu (desktop: horizontalūs punktai, mobile: hamburger)
 * &check; Panaudoti vektorines ikonas (webfont, svg).
 * &check; Panaudotas kitoks šriftas (google fonts arba savo sugeneruotas)
 * &check; Panaudoti modalinį langą, kuriame pateikiama aktuali/prasminga informacija.
@@ -16,6 +18,10 @@
 * &check; Įvedimo formos turi būti aiškios ir nuoseklios.
 * &check; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
 - &#x2610; Projekto kodas turi būti laikomas Git saugykloje (github, bitbucket, gitlab ar kt.). Dokumentacija - projektui sukurtame wiki arba projekto kodo Git saugykloje (.readme).
+
+## Documentation
+
+
 
 
 # vue-project
