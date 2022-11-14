@@ -49,7 +49,6 @@
 
 <script lang="ts">
 import testService from "@/services/testService";
-import { TokenService } from "@/services/tokenService";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -76,7 +75,6 @@ export default defineComponent({
   },
   methods: {
     trigerMenuDisplay() {
-      console.log(this.displayMenu);
       this.displayMenu = !this.displayMenu;
     },
   },
