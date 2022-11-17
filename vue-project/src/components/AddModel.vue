@@ -110,7 +110,7 @@
               <label
                 for="song"
                 class="my-4 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Type {{ modelName }} new Url:</label
+                >Type {{ modelType }} new Url:</label
               >
               <input
                 v-model="newUrl"

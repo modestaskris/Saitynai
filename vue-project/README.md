@@ -1,6 +1,10 @@
 # Project requirements
+
+## Wireframe:
+(![Alt text](/WireFrame/Screenshot%202022-11-14%20225824.png "Title"))
+
 <!-- * &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai) -->
-* &#x2610; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
+* &check; Naudotojo sąsajos projektas (projektuojamos sąsajos langų wireframe`ai)
 * &check; Sukurti naudotojo sąsajos sprendimą realizuotam REST API
 * &check; Responsive layout (bent 1 breakpoint`as, pvz. ties 768px)
 * &check; Images prisitaikymas (max-width taisyklė, kad paveikslėlis mažėtų neišlipdamas iš savo konteinerio elemento)
@@ -17,8 +21,12 @@
 * &check; Elementų matomumas ir pasiekiamumas neturi būti apsunkintas.
 * &check; Įvedimo formos turi būti aiškios ir nuoseklios.
 * &check; Naudotojo sąsajos grafinis dizainas turi būti vientisas, atitikti projekto užduotį
-- &#x2610; Projekto kodas turi būti laikomas Git saugykloje (github, bitbucket, gitlab ar kt.). Dokumentacija - projektui sukurtame wiki arba projekto kodo Git saugykloje (.readme).
+- &#x2610; Projekto kodas turi būti laikomas Git saugykloje (github, bitbucket, gitlab ar kt.). 
+Dokumentacija - projektui sukurtame wiki arba projekto kodo Git saugykloje (.readme).
 
+
+&check; 
+&#x2610;
 ## Documentation
 
 

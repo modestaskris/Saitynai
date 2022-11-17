@@ -7,7 +7,7 @@ import LandingView from "@/views/LandingView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import auth from "./authMiddleware";
 import ROUTE from "./route";
-import { TokenService } from "@/services/TokenService";
+import { TokenService } from "@/services/tokenService";
 import NotFoundViewVue from '@/views/NotFoundView.vue';
 
 const router = createRouter({

@@ -55,23 +55,23 @@
 
 <script lang="ts">
 import { AuthService } from '@/services/authService';
-import type { IUser } from '@/models/user/interface';
 import route from '@/router/route';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     data(){
         return{
-            Username: "",
-            Password: "",
-            Repassword: "",
+            Username: "" as string,
+            Password: "" as string,
+            Repassword: "" as string,
             MyError: {
                 active: false,
-                message: ""
+                message: ""as string
             }
         }
     },
     methods: {
-        async register(): Promise<void>{
+        async register(){
             // Validating password length
             const enoughPasswordLenght = this.Password.length >= 5;
             if(!enoughPasswordLenght){
@@ -94,7 +94,7 @@ export default {
             this.MyError.active = false;
             this.MyError.message = "";
 
-            var user:IUser = {
+            var user = {
                 username: this.Username,
                 password: this.Password
             }
@@ -119,5 +119,5 @@ export default {
     },
     // mounted(){
     // },
-}
+})
 </script>

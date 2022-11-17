@@ -4,7 +4,7 @@
     <div class="">
         <div class="grid grid-cols-3">
             <div class="text-2xl font-semibold">
-                {{ this.label }}
+                {{ label }}
             </div>
             <div class="flex justify-center">
                 <slot name="center"></slot>

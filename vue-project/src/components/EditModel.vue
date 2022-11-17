@@ -17,7 +17,7 @@
   </button>
 
   <!-- Main modal -->
-  <div @click="clickedBackground" :class="{ hidden: this.displayModal }" id="authentication-modal" tabindex="-1"
+  <div @click="clickedBackground" :class="{ hidden: displayModal }" id="authentication-modal" tabindex="-1"
     aria-hidden="true" class="
       overflow-y-auto overflow-x-hidden
       flex
@@ -249,7 +249,7 @@ export default defineComponent({
         // TODO emit not implemented.. or throw error
       }
       this.clearData();
-      this.onModalClick();
+      this.onModalClick(undefined);
     },
     clearData() {
       this.newModelName = ""; // clears old data

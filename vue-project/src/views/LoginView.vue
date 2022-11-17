@@ -50,7 +50,8 @@ import { AuthService } from '@/services/authService';
 import type { IUser } from '@/models/user/user';
 import ROUTE from '../router/route';
 import { defineComponent } from 'vue';
-import { TokenService } from '@/services/TokenService';
+import { TokenService } from '@/services/tokenService';
+import type { AxiosInstance, AxiosResponse } from 'axios';
 
 export default defineComponent({
     data(){
@@ -72,7 +73,7 @@ export default defineComponent({
                 username: this.Username,
                 password: this.Password
             }
-            const resp = await AuthService.login(user);
+            const resp: AxiosResponse = await AuthService.login(user);
             if(resp.status == 200){
                 // TODO save token...
                 TokenService.saveToken(resp.data);
@@ -81,12 +82,6 @@ export default defineComponent({
                 // todo show errors...
             }
         },
-        validatePassowrds(): Boolean{
-            // TS error, expects password and repassword is in export default scope.... it is in data scope
-            if(this.Password === this.Repassword)
-                return true
-            return false;
-        }
     },
 })
 </script>

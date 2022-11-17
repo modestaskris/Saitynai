@@ -12,7 +12,7 @@
   <!-- Main modal -->
   <div
     @click="clickedBackground"
-    :class="{ hidden: this.displayModal }"
+    :class="{ hidden: displayModal }"
     id="authentication-modal"
     tabindex="-1"
     aria-hidden="true"

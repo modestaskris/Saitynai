@@ -8,7 +8,7 @@ export const AuthService = {
     return await AxiosInstance.post(ENDPOINT.Register, body);
   },
 
-  async login(body:any): Promise<string> {
+  async login(body:any){
     return await AxiosInstance.post(ENDPOINT.Login, body);
   },
 

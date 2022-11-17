@@ -24,7 +24,7 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue, *.ts"],
   "compilerOptions": {
-    "strict": true,
+    "strict": false,
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
@@ -36,4 +36,19 @@
       "path": "./tsconfig.config.json"
     }
   ]
+  // "extends": "@vue/tsconfig/tsconfig.web.json",
+  // "include": ["env.d.ts", "src/**/*", "src/**/*.vue, *.ts"],
+  // "compilerOptions": {
+  //   "strict": true,
+  //   "isolatedModules": true,
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "@/*": ["./src/*"]
+  //   }
+  // },
+  // "references": [
+  //   {
+  //     "path": "./tsconfig.config.json"
+  //   }
+  // ]
 }
