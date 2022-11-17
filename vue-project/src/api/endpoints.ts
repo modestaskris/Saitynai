@@ -1,6 +1,6 @@
 // TODO use .env file to save app config...
-export const BaseUrl = 'https://localhost:7266';
-// export const BaseUrl = 'https://saitynai20221106170850.azurewebsites.net/';
+// export const BaseUrl = 'https://localhost:7266';
+export const BaseUrl = 'https://saitynai20221106170850.azurewebsites.net/';
 
 
 const endpointVersion = "/api";
