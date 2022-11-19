@@ -5,7 +5,6 @@ export const BaseUrl = 'https://saitynai20221106170850.azurewebsites.net/';
 
 const endpointVersion = "/api";
 const auth = '/auth'
-
 export const ENDPOINT  = {
     // Auth
     Register: endpointVersion + auth +'/register',
