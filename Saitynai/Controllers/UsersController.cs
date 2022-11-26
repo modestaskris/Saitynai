@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Saitynai.DTO;
+using Saitynai.DTO.Response;
 using Saitynai.Helpers;
 using Saitynai.Models;
+using Saitynai.Services;
 
 namespace Saitynai.Controllers
 {
@@ -17,69 +20,49 @@ namespace Saitynai.Controllers
     public class UsersController : BaseController
     {
         private readonly DataContext _context;
+        private readonly ICustomMapper _customMapper;
 
-        public UsersController(DataContext context)
+        public UsersController(DataContext context, ICustomMapper customMapper)
         {
             _context = context;
+            _customMapper = customMapper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserRespDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+
+            var convertedUsers = new List<UserRespDto>();
+            
+            foreach(var user in users)
+            {
+                convertedUsers.Add(_customMapper.Mapper(user));
+            }
+
+            return convertedUsers;
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserRespDto>> GetUser(string username)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(username);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
-        }
-
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
-        {
-            if (id != user.Username)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _customMapper.Mapper(user);
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(string id)
+        [HttpDelete("{username}")]
+        public async Task<IActionResult> DeleteUser(string username)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(username);
             if (user == null)
             {
                 return NotFound();

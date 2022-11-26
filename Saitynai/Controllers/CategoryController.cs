@@ -122,8 +122,14 @@ namespace Saitynai.Controllers
             List<PlaylistDetails> playlistDetails = new List<PlaylistDetails>();
             foreach (var p in category.Playlists)
             {
+                List<SongRespDto> songs = new List<SongRespDto>();
+
+                foreach(var song in p.Songs)
+                {
+                    songs.Add(_customMapper.Mapper(song));
+                }
                 PlaylistDetails newPlaylistDetails = new PlaylistDetails()
-                    { Created = p.Created, Url = p.Url, Title = p.Title, PlaylistId = p.PlaylistId, Songs = p.Songs };
+                    { Created = p.Created, Url = p.Url, Title = p.Title, PlaylistId = p.PlaylistId, Songs = songs };
                 playlistDetails.Add(newPlaylistDetails);
             }
 

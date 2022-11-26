@@ -9,6 +9,7 @@ namespace Saitynai.Services
         CategoryRespDto Mapper(Category category);
         PlaylistRespDto Mapper(Playlist playlist);
         SongRespDto Mapper(Song song);
+        UserRespDto Mapper(User user);
     }
 
     public class CustomMapper : ICustomMapper
@@ -52,6 +53,11 @@ namespace Saitynai.Services
                 DownloadedDate = song.DownloadedDate,
                 Url = song.Url
             };
+        }
+
+        public UserRespDto Mapper(User user)
+        {
+            return new UserRespDto { UserId = user.UserId, Username = user.Username, Role= user.Role };
         }
     }
 }
